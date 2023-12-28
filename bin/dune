@@ -1,4 +1,4 @@
 (executable
  (public_name registry)
  (name main)
- (libraries registry dream))
+ (libraries registry dream dream-html))
