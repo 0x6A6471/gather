@@ -1,0 +1,43 @@
+### OCaml ###
+*.annot
+*.cmo
+*.cma
+*.cmi
+*.a
+*.o
+*.cmx
+*.cmxs
+*.cmxa
+
+# ocamlbuild working directory
+_build/
+
+# ocamlbuild targets
+*.byte
+*.native
+
+# oasis generated files
+setup.data
+setup.log
+
+# Merlin configuring file for Vim and Emacs
+.merlin
+
+# Dune generated files
+*.install
+
+# esy
+_esy
+
+# Local OPAM switch
+_opam/
+
+# Don't keep bundled JS files in the repo, since they change
+tailwindcss
+styles/*.dist.js
+styles/output.css
+
+# Misc
+.DS_Store
+
+.env
