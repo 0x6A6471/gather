@@ -1,4 +1,12 @@
 (executable
  (public_name registry)
  (name main)
- (libraries registry dream dream-html))
+ (libraries 
+   registry 
+   dream 
+   dream-html 
+   caqti 
+   caqti-lwt 
+   caqti-driver-sqlite3
+   ppx_rapper_lwt)
+ (preprocess (pps ppx_rapper)))
