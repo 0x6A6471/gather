@@ -41,3 +41,4 @@ styles/output.css
 .DS_Store
 
 .env
+registry.db

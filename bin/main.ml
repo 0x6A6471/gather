@@ -1,4 +1,39 @@
-let page _ =
+open Lwt.Syntax
+
+module type DB = Caqti_lwt.CONNECTION
+
+module T = Caqti_type
+
+let init_pool () =
+  let uri = Uri.make ~scheme:"sqlite3" ~path:"./registry.db" () in
+  match Caqti_lwt.connect_pool ~max_size:10 uri with
+  | Ok pool -> pool
+  | Error err -> failwith (Caqti_error.show err)
+;;
+
+let pool = init_pool ()
+
+let get_guests pool =
+  let query =
+    [%rapper
+      get_many
+        {sql| SELECT @string{name}, @string{address}, @int{amount}, @bool{rsvp}, @bool{invite_sent}, @bool{save_the_date} FROM guests |sql}]
+  in
+  let* guests_result = Caqti_lwt.Pool.use (query ()) pool in
+  match guests_result with
+  | Error e -> failwith (Caqti_error.show e)
+  | Ok guests -> Lwt.return guests
+;;
+
+let checkbox cond =
+  let open Dream_html in
+  let open HTML in
+  if cond
+  then input [ type_ "checkbox"; checked ]
+  else input [ type_ "checkbox" ]
+;;
+
+let page guests =
   let open Dream_html in
   let open HTML in
   html
@@ -13,42 +48,149 @@ let page _ =
             ; href
                 "https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap"
             ]
-        ; link [ rel "stylesheet"; href "/static/global.css" ]
+        ; link [ rel "stylesheet"; href "/styles/output.css" ]
         ; script [ src "https://unpkg.com/htmx.org@1.9.10" ] ""
         ]
     ; body
         []
-        [ h1 [] [ txt "Jake & Jen Wedding Guest List" ]
-        ; div
-            []
-            [ button
-                [ Hx.post "/server"; Hx.target "#response" ]
-                [ txt "Get HTML from server" ]
-            ; div [ id "response" ] []
+        [ div
+            [ class_ "px-4" ]
+            [ h1
+                [ class_ "text-center text-4xl font-bold" ]
+                [ txt "Jake & Jen Wedding Guest List" ]
+            ; div
+                [ class_ "mt-8" ]
+                [ div
+                    [ class_ "-mx-4 -my-2 overflow-x-auto p-1" ]
+                    [ div
+                        [ class_ "inline-block min-w-full py-2 align-middle" ]
+                        [ div
+                            [ class_
+                                "overflow-hidden shadow ring-1 ring-black \
+                                 ring-opacity-5 rounded-lg"
+                            ]
+                            [ table
+                                [ class_ "min-w-full divide-y divide-gray-200" ]
+                                [ thead
+                                    [ class_ "bg-gray-50" ]
+                                    [ tr
+                                        []
+                                        [ th
+                                            [ class_
+                                                "py-3.5 pl-4 pr-3 text-left \
+                                                 text-sm font-semibold \
+                                                 text-gray-900"
+                                            ]
+                                            [ txt "Name" ]
+                                        ; th
+                                            [ class_
+                                                "py-3.5 pl-4 pr-3 text-left \
+                                                 text-sm font-semibold \
+                                                 text-gray-900"
+                                            ]
+                                            [ txt "Address" ]
+                                        ; th
+                                            [ class_
+                                                "py-3.5 pl-4 pr-3 text-left \
+                                                 text-sm font-semibold \
+                                                 text-gray-900"
+                                            ]
+                                            [ txt "Amount" ]
+                                        ; th
+                                            [ class_
+                                                "py-3.5 pl-4 pr-3 text-left \
+                                                 text-sm font-semibold \
+                                                 text-gray-900"
+                                            ]
+                                            [ txt "RSVP" ]
+                                        ; th
+                                            [ class_
+                                                "py-3.5 pl-4 pr-3 text-left \
+                                                 text-sm font-semibold \
+                                                 text-gray-900"
+                                            ]
+                                            [ txt "Invite" ]
+                                        ; th
+                                            [ class_
+                                                "py-3.5 pl-4 pr-3 text-left \
+                                                 text-sm font-semibold \
+                                                 text-gray-900"
+                                            ]
+                                            [ txt "Save the Date" ]
+                                        ]
+                                    ]
+                                ; tbody
+                                    [ class_ "divide-y divide-gray-200 bg-white"
+                                    ]
+                                    (List.map
+                                       (fun ( name
+                                            , address
+                                            , amount
+                                            , rsvp
+                                            , invite_sent
+                                            , save_the_date ) ->
+                                         tr
+                                           []
+                                           [ td
+                                               [ class_
+                                                   "whitespace-nowrap px-3 \
+                                                    py-4 text-sm text-gray-900 \
+                                                    font-bold"
+                                               ]
+                                               [ txt "%s" name ]
+                                           ; td
+                                               [ class_
+                                                   "whitespace-nowrap px-3 \
+                                                    py-4 text-sm text-gray-500"
+                                               ]
+                                               [ txt "%s" address ]
+                                           ; td
+                                               [ class_
+                                                   "whitespace-nowrap px-3 \
+                                                    py-4 text-sm text-gray-500"
+                                               ]
+                                               [ txt "%d" amount ]
+                                           ; td
+                                               [ class_
+                                                   "whitespace-nowrap px-3 \
+                                                    py-4 text-sm text-gray-500"
+                                               ]
+                                               [ checkbox rsvp ]
+                                           ; td
+                                               [ class_
+                                                   "whitespace-nowrap px-3 \
+                                                    py-4 text-sm text-gray-500"
+                                               ]
+                                               [ checkbox invite_sent ]
+                                           ; td
+                                               [ class_
+                                                   "whitespace-nowrap px-3 \
+                                                    py-4 text-sm text-gray-500"
+                                               ]
+                                               [ checkbox save_the_date ]
+                                           ])
+                                       guests)
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
             ]
         ]
     ]
 ;;
 
-(* Integrated with Dream response *)
-let handler req = Dream_html.respond (page req)
-
-let test_html _ =
-  let open Dream_html in
-  let open HTML in
-  html [ lang "en" ] [ p [ style_ "color: red;" ] [ txt "Hi from server" ] ]
+let handler _ =
+  let* guests = get_guests pool in
+  Dream_html.respond (page guests)
 ;;
-
-let handler_test req = Dream_html.respond (test_html req)
 
 let () =
   Dream.run
   @@ Dream.logger
+  @@ Dream.sql_pool "sqlite3:./registry.db"
   @@ Dream.router
        [ Dream.get "/" handler
-       ; Dream.post "/server" handler_test
-       ; Dream.get "/echo/:word" (fun request ->
-           Dream.html (Dream.param request "word"))
-       ; Dream.get "/static/**" (Dream.static ".")
+       ; Dream.get "/styles/**" @@ Dream.static "./styles"
        ]
 ;;
