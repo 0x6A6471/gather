@@ -1,0 +1,7 @@
+(library
+ (name views)
+ (libraries 
+   dream 
+   dream-html 
+   fmt
+   registry))

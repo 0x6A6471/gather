@@ -2,11 +2,14 @@
  (public_name registry)
  (name main)
  (libraries 
-   registry 
+   caqti 
+   caqti-driver-sqlite3
+   caqti-lwt 
    dream 
    dream-html 
-   caqti 
-   caqti-lwt 
-   caqti-driver-sqlite3
-   ppx_rapper_lwt)
+   dream-livereload
+   ppx_rapper_lwt
+   registry 
+   routes
+   views)
  (preprocess (pps ppx_rapper)))

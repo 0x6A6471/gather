@@ -1,0 +1,9 @@
+(library
+ (name routes)
+ (libraries 
+   dream 
+   fmt
+   ppx_rapper_lwt
+   registry
+   views)
+ (preprocess (pps ppx_rapper)))
