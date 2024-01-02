@@ -1,3 +1,6 @@
+### TODO 
+* Lock down routes
+
 ### Guest list requirements
 * id (number auto increment)
 * name (string)
