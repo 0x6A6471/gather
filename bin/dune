@@ -6,10 +6,7 @@
    caqti-driver-sqlite3
    caqti-lwt 
    dream 
-   dream-html 
    dream-livereload
-   ppx_rapper_lwt
    registry 
    routes
-   views)
- (preprocess (pps ppx_rapper)))
+   views))
