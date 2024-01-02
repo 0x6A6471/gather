@@ -18,7 +18,7 @@ let () =
   @@ Dream.logger
   @@ Dream_livereload.inject_script ()
   @@ Dream.sql_pool "sqlite3:./registry.db"
-  @@ Dream.memory_sessions
+  @@ Dream.sql_sessions ~lifetime:3600.0
   @@ Dream.router
        ([ Dream.get "/styles/**" @@ Dream.static "./styles"
         ; Dream_livereload.route ()
