@@ -74,10 +74,7 @@ let row _ pool =
 ;;
 
 let handler req pool =
-  Dream.log "Received request for /guests/:id/edit";
-  (* Log the request path *)
   let* response_content = row req pool in
-  Dream.log "Response HTML: %s" (Dream_html.to_string response_content);
   Dream_html.respond
     ~status:`OK
     ~headers:[ "Content-Type", "text/html" ]
