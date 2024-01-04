@@ -1,9 +1,18 @@
-let checkbox cond =
+let badge check =
   let open Dream_html in
   let open HTML in
-  if cond
-  then input [ type_ "checkbox"; checked ]
-  else input [ type_ "checkbox" ]
+  let text = if check then "Yes" else "No" in
+  let colors =
+    if check
+    then "bg-emerald-50 text-emerald-700 ring-emerald-600/10"
+    else "bg-rose-50 text-rose-700 ring-rose-600/10"
+  in
+  let class_string =
+    "inline-flex items-center rounded-md  px-2 py-1 text-xs font-medium ring-1 \
+     ring-inset "
+    ^ colors
+  in
+  span [ class_ "%s" class_string ] [ txt "%s" text ]
 ;;
 
 let page guests =
@@ -90,13 +99,23 @@ let page guests =
                                                  text-gray-900"
                                             ]
                                             [ txt "Save the Date" ]
+                                        ; th
+                                            [ class_
+                                                "py-3.5 pl-4 pr-3 text-left \
+                                                 text-sm font-semibold \
+                                                 text-gray-900"
+                                            ]
+                                            [ txt "Edit" ]
                                         ]
                                     ]
                                 ; tbody
-                                    [ class_ "divide-y divide-gray-200 bg-white"
+                                    [ Hx.target "closest tr"
+                                    ; Hx.swap "outerHTML"
+                                    ; class_ "divide-y divide-gray-200 bg-white"
                                     ]
                                     (List.map
-                                       (fun ( name
+                                       (fun ( id
+                                            , name
                                             , address
                                             , amount
                                             , rsvp
@@ -125,22 +144,39 @@ let page guests =
                                                [ txt "%d" amount ]
                                            ; td
                                                [ class_
-                                                   "whitespace-nowrap px-3 \
-                                                    py-4 text-sm text-gray-500"
+                                                   "whitespace-nowrap px-3 py-4"
                                                ]
-                                               [ checkbox rsvp ]
+                                               [ badge rsvp ]
+                                           ; td
+                                               [ class_
+                                                   "whitespace-nowrap px-3 py-4"
+                                               ]
+                                               [ badge invite_sent ]
+                                           ; td
+                                               [ class_
+                                                   "whitespace-nowrap px-3 py-4"
+                                               ]
+                                               [ badge save_the_date ]
                                            ; td
                                                [ class_
                                                    "whitespace-nowrap px-3 \
                                                     py-4 text-sm text-gray-500"
                                                ]
-                                               [ checkbox invite_sent ]
-                                           ; td
-                                               [ class_
-                                                   "whitespace-nowrap px-3 \
-                                                    py-4 text-sm text-gray-500"
+                                               [ button
+                                                   [ Hx.get "/guests/%d/edit" id
+                                                   ; class_
+                                                       "rounded bg-indigo-600 \
+                                                        px-2 py-1 text-xs \
+                                                        font-semibold \
+                                                        text-white shadow-sm \
+                                                        hover:bg-indigo-500 \
+                                                        focus-visible:outline \
+                                                        focus-visible:outline-2 \
+                                                        focus-visible:outline-offset-2 \
+                                                        focus-visible:outline-indigo-600"
+                                                   ]
+                                                   [ txt "Edit" ]
                                                ]
-                                               [ checkbox save_the_date ]
                                            ])
                                        guests)
                                 ]

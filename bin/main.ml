@@ -13,10 +13,16 @@ let init_pool () =
 
 let pool = init_pool ()
 
+let htmx_no_livereload next_handler req =
+  match Dream.header req "Hx-Request" with
+  | Some "true" -> next_handler req
+  | _ -> Dream_livereload.inject_script () next_handler req
+;;
+
 let () =
   Dream.run ~interface:"0.0.0.0"
   @@ Dream.logger
-  @@ Dream_livereload.inject_script ()
+  @@ htmx_no_livereload
   @@ Dream.sql_pool "sqlite3:./registry.db"
   @@ Dream.sql_sessions ~lifetime:3600.0
   @@ Dream.router
@@ -24,5 +30,6 @@ let () =
         ; Dream_livereload.route ()
         ]
         @ Login.login_routes pool
-        @ Home.home_routes pool)
+        @ Home.home_routes pool
+        @ Edit_row.edit_row_routes pool)
 ;;
