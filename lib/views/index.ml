@@ -23,6 +23,10 @@ let page guests =
             ]
         ; link [ rel "stylesheet"; href "/styles/output.css" ]
         ; script [ src "https://unpkg.com/htmx.org@1.9.10" ] ""
+        ; meta
+            [ name "htmx-config"
+            ; content "{\"useTemplateFragments\":\"true\"}"
+            ]
         ]
     ; body
         []
@@ -90,13 +94,23 @@ let page guests =
                                                  text-gray-900"
                                             ]
                                             [ txt "Save the Date" ]
+                                        ; th
+                                            [ class_
+                                                "py-3.5 pl-4 pr-3 text-left \
+                                                 text-sm font-semibold \
+                                                 text-gray-900"
+                                            ]
+                                            [ txt "Edit" ]
                                         ]
                                     ]
                                 ; tbody
-                                    [ class_ "divide-y divide-gray-200 bg-white"
+                                    [ Hx.target "closest tr"
+                                    ; Hx.swap "outerHTML"
+                                    ; class_ "divide-y divide-gray-200 bg-white"
                                     ]
                                     (List.map
-                                       (fun ( name
+                                       (fun ( id
+                                            , name
                                             , address
                                             , amount
                                             , rsvp
@@ -141,6 +155,26 @@ let page guests =
                                                     py-4 text-sm text-gray-500"
                                                ]
                                                [ checkbox save_the_date ]
+                                           ; td
+                                               [ class_
+                                                   "whitespace-nowrap px-3 \
+                                                    py-4 text-sm text-gray-500"
+                                               ]
+                                               [ button
+                                                   [ Hx.get "/guests/%d/edit" id
+                                                   ; class_
+                                                       "rounded bg-indigo-600 \
+                                                        px-2 py-1 text-xs \
+                                                        font-semibold \
+                                                        text-white shadow-sm \
+                                                        hover:bg-indigo-500 \
+                                                        focus-visible:outline \
+                                                        focus-visible:outline-2 \
+                                                        focus-visible:outline-offset-2 \
+                                                        focus-visible:outline-indigo-600"
+                                                   ]
+                                                   [ txt "Edit" ]
+                                               ]
                                            ])
                                        guests)
                                 ]
