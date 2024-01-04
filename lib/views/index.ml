@@ -23,10 +23,6 @@ let page guests =
             ]
         ; link [ rel "stylesheet"; href "/styles/output.css" ]
         ; script [ src "https://unpkg.com/htmx.org@1.9.10" ] ""
-        ; meta
-            [ name "htmx-config"
-            ; content "{\"useTemplateFragments\":\"true\"}"
-            ]
         ]
     ; body
         []
