@@ -31,5 +31,6 @@ let () =
         ]
         @ Login.login_routes pool
         @ Home.home_routes pool
-        @ Edit_row.edit_row_routes pool)
+        @ Edit_row.edit_row_routes pool
+        @ Update_guest.routes pool)
 ;;

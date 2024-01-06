@@ -1,13 +1,5 @@
 open Lwt.Syntax
 
-let checkbox cond =
-  let open Dream_html in
-  let open HTML in
-  if cond
-  then input [ type_ "checkbox"; checked ]
-  else input [ type_ "checkbox" ]
-;;
-
 type guest =
   { id : int
   ; name : string
@@ -44,29 +36,51 @@ let row _ pool =
            ]
            [ txt "%s" guest.name ]
        ; td
-           [ class_ "whitespace-nowrap px-3 py-4 text-sm text-gray-500" ]
+           [ class_ " px-3 py-4 text-sm text-gray-500" ]
            [ txt "%s" guest.address ]
        ; td
            [ class_ "whitespace-nowrap px-3 py-4 text-sm text-gray-500" ]
-           [ txt "%i" guest.amount ]
+           [ input [ name "amount"; value "%i" guest.amount ] ]
        ; td
            [ class_ "whitespace-nowrap px-3 py-4 text-sm text-gray-500" ]
-           [ checkbox guest.rsvp ]
+           [ input
+               ([ type_ "checkbox"; name "rsvp"; value "1" ]
+                @ if guest.rsvp then [ checked ] else [])
+           ]
        ; td
            [ class_ "whitespace-nowrap px-3 py-4 text-sm text-gray-500" ]
-           [ checkbox guest.invite_sent ]
+           [ input
+               ([ type_ "checkbox"; name "invite_sent"; value "1" ]
+                @ if guest.invite_sent then [ checked ] else [])
+           ]
        ; td
            [ class_ "whitespace-nowrap px-3 py-4 text-sm text-gray-500" ]
-           [ checkbox guest.save_the_date ]
+           [ input
+               ([ type_ "checkbox"; name "save_the_date"; value "1" ]
+                @ if guest.save_the_date then [ checked ] else [])
+           ]
        ; td
            [ class_ "whitespace-nowrap px-3 py-4 text-sm text-gray-500" ]
            [ button
-               [ class_
-                   "rounded bg-indigo-600 px-2 py-1 text-xs font-semibold \
-                    text-white shadow-sm hover:bg-indigo-500 \
+               [ Hx.put "/guests/%i" guest.id
+               ; Hx.include_ "closest tr"
+               ; class_
+                   "rounded bg-gray-100 px-2 py-1 text-xs font-semibold \
+                    text-black shadow-sm hover:bg-gray-200 \
                     focus-visible:outline focus-visible:outline-2 \
                     focus-visible:outline-offset-2 \
-                    focus-visible:outline-indigo-600"
+                    focus-visible:outline-gray-100"
+               ]
+               [ txt "Cancel" ]
+           ; button
+               [ Hx.put "/guests/%i" guest.id
+               ; Hx.include_ "closest tr"
+               ; class_
+                   "rounded bg-gray-900 px-2 py-1 text-xs font-semibold \
+                    text-white shadow-sm hover:bg-opacity-90 \
+                    focus-visible:outline focus-visible:outline-2 \
+                    focus-visible:outline-offset-2 \
+                    focus-visible:outline-gray-900"
                ]
                [ txt "Save" ]
            ]
