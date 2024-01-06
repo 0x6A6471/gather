@@ -1,13 +1,5 @@
 open Lwt.Syntax
 
-let checkbox cond =
-  let open Dream_html in
-  let open HTML in
-  if cond
-  then input [ type_ "checkbox"; checked ]
-  else input [ type_ "checkbox" ]
-;;
-
 type guest =
   { id : int
   ; name : string
@@ -31,10 +23,26 @@ let get_guest pool id =
   | Ok guest -> Lwt.return guest
 ;;
 
+let update_guest pool id rsvp =
+  let query =
+    [%rapper
+      execute
+        {sql|
+          UPDATE guests
+            SET rsvp = %int{rsvp} 
+          WHERE id = %int{id}
+        |sql}]
+  in
+  let* result = Caqti_lwt.Pool.use (fun db -> query db ~id ~rsvp) pool in
+  match result with
+  | Error e -> failwith (Caqti_error.show e)
+  | Ok () -> get_guest pool id
+;;
+
 let row _ pool =
   let open Dream_html in
   let open HTML in
-  let* guest = get_guest pool 1 in
+  let* guest = update_guest pool 1 1 in
   Lwt.return
     (tr
        []
@@ -45,24 +53,23 @@ let row _ pool =
            [ txt "%s" guest.name ]
        ; td
            [ class_ "whitespace-nowrap px-3 py-4 text-sm text-gray-500" ]
-           [ input [ name "address"; value "%s" guest.address ] ]
+           [ txt "%s" guest.address ]
        ; td
            [ class_ "whitespace-nowrap px-3 py-4 text-sm text-gray-500" ]
            [ txt "%i" guest.amount ]
        ; td
            [ class_ "whitespace-nowrap px-3 py-4 text-sm text-gray-500" ]
-           [ input [ type_ "checkbox"; name "rsvp"; value "%i" 1 ] ]
+           [ txt "%b" guest.rsvp ]
        ; td
            [ class_ "whitespace-nowrap px-3 py-4 text-sm text-gray-500" ]
-           [ checkbox guest.invite_sent ]
+           [ txt "%b" guest.invite_sent ]
        ; td
            [ class_ "whitespace-nowrap px-3 py-4 text-sm text-gray-500" ]
-           [ checkbox guest.save_the_date ]
+           [ txt "%b" guest.save_the_date ]
        ; td
            [ class_ "whitespace-nowrap px-3 py-4 text-sm text-gray-500" ]
            [ button
-               [ Hx.put "/guests/%i" guest.id
-               ; Hx.include_ "closest tr"
+               [ Hx.get "/guests/%i/edit" guest.id
                ; class_
                    "rounded bg-indigo-600 px-2 py-1 text-xs font-semibold \
                     text-white shadow-sm hover:bg-indigo-500 \
@@ -70,7 +77,7 @@ let row _ pool =
                     focus-visible:outline-offset-2 \
                     focus-visible:outline-indigo-600"
                ]
-               [ txt "Save" ]
+               [ txt "Edit" ]
            ]
        ])
 ;;
@@ -83,6 +90,4 @@ let handler req pool =
     response_content
 ;;
 
-let edit_row_routes pool =
-  [ Dream.get "/guests/:id/edit" (fun req -> handler req pool) ]
-;;
+let routes pool = [ Dream.put "/guests/:id" (fun req -> handler req pool) ]

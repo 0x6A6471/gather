@@ -163,7 +163,7 @@ let page guests =
                                                     py-4 text-sm text-gray-500"
                                                ]
                                                [ button
-                                                   [ Hx.get "/guests/%d/edit" id
+                                                   [ Hx.get "/guests/%i/edit" id
                                                    ; class_
                                                        "rounded bg-indigo-600 \
                                                         px-2 py-1 text-xs \
