@@ -44,10 +44,8 @@ let row _ pool =
        ; td
            [ class_ "whitespace-nowrap px-3 py-4 text-sm text-gray-500" ]
            [ input
-               [ type_ "checkbox"
-               ; name "rsvp"
-               ; (if guest.rsvp then value "1" else value "0")
-               ]
+               ([ type_ "checkbox"; name "rsvp"; value "1" ]
+                @ if guest.rsvp then [ checked ] else [])
            ]
        ; td
            [ class_ "whitespace-nowrap px-3 py-4 text-sm text-gray-500" ]
