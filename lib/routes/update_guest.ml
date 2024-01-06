@@ -23,26 +23,46 @@ let get_guest pool id =
   | Ok guest -> Lwt.return guest
 ;;
 
-let update_guest pool id rsvp =
-  let query =
-    [%rapper
-      execute
-        {sql|
-          UPDATE guests
-            SET rsvp = %int{rsvp} 
-          WHERE id = %int{id}
-        |sql}]
-  in
-  let* result = Caqti_lwt.Pool.use (fun db -> query db ~id ~rsvp) pool in
-  match result with
-  | Error e -> failwith (Caqti_error.show e)
-  | Ok () -> get_guest pool id
+let update_guest req pool =
+  (* get params *)
+  let id = Dream.param req "id" |> int_of_string in
+  (* get form data *)
+  let* form = Dream.form ~csrf:false req in
+  match form with
+  | `Ok data -> begin
+    match List.find_opt (fun (key, _) -> key = "rsvp") data with
+    | Some (_, value) ->
+      let rsvp = int_of_string value in
+      (* update db *)
+      let query =
+        [%rapper
+          execute
+            {sql|
+              UPDATE guests
+                SET rsvp = %int{rsvp} 
+                WHERE id = %int{id}
+              |sql}]
+      in
+      let* result = Caqti_lwt.Pool.use (fun db -> query db ~id ~rsvp) pool in
+      begin
+        match result with
+        | Error e -> failwith (Caqti_error.show e)
+        | Ok () -> get_guest pool id
+      end
+    | None -> failwith "RSVP not found in the form data"
+  end
+  | `Expired _ -> failwith "Form expired"
+  | `Wrong_session _ -> failwith "wrong session"
+  | `Invalid_token _ -> failwith "Invalid token"
+  | `Missing_token _ -> failwith "Missing token"
+  | `Many_tokens _ -> failwith "Many token"
+  | `Wrong_content_type -> failwith "Wrong content type"
 ;;
 
-let row _ pool =
+let row req pool =
   let open Dream_html in
   let open HTML in
-  let* guest = update_guest pool 1 1 in
+  let* guest = update_guest req pool in
   Lwt.return
     (tr
        []

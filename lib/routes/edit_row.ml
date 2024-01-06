@@ -1,13 +1,5 @@
 open Lwt.Syntax
 
-let checkbox cond =
-  let open Dream_html in
-  let open HTML in
-  if cond
-  then input [ type_ "checkbox"; checked ]
-  else input [ type_ "checkbox" ]
-;;
-
 type guest =
   { id : int
   ; name : string
@@ -44,20 +36,25 @@ let row _ pool =
            ]
            [ txt "%s" guest.name ]
        ; td
-           [ class_ "whitespace-nowrap px-3 py-4 text-sm text-gray-500" ]
-           [ input [ name "address"; value "%s" guest.address ] ]
+           [ class_ " px-3 py-4 text-sm text-gray-500" ]
+           [ txt "%s" guest.address ]
        ; td
            [ class_ "whitespace-nowrap px-3 py-4 text-sm text-gray-500" ]
-           [ txt "%i" guest.amount ]
+           [ input [ name "amount"; value "%i" guest.amount ] ]
        ; td
            [ class_ "whitespace-nowrap px-3 py-4 text-sm text-gray-500" ]
-           [ input [ type_ "checkbox"; name "rsvp"; value "%i" 1 ] ]
+           [ input
+               [ type_ "checkbox"
+               ; name "rsvp"
+               ; (if guest.rsvp then value "1" else value "0")
+               ]
+           ]
        ; td
            [ class_ "whitespace-nowrap px-3 py-4 text-sm text-gray-500" ]
-           [ checkbox guest.invite_sent ]
+           [ txt "%b" guest.invite_sent ]
        ; td
            [ class_ "whitespace-nowrap px-3 py-4 text-sm text-gray-500" ]
-           [ checkbox guest.save_the_date ]
+           [ txt "%b" guest.save_the_date ]
        ; td
            [ class_ "whitespace-nowrap px-3 py-4 text-sm text-gray-500" ]
            [ button
