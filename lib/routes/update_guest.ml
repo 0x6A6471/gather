@@ -1,5 +1,22 @@
 open Lwt.Syntax
 
+let badge check =
+  let open Dream_html in
+  let open HTML in
+  let text = if check then "Yes" else "No" in
+  let colors =
+    if check
+    then "bg-emerald-50 text-emerald-700 ring-emerald-600/10"
+    else "bg-rose-50 text-rose-700 ring-rose-600/10"
+  in
+  let class_string =
+    "inline-flex items-center rounded-md  px-2 py-1 text-xs font-medium ring-1 \
+     ring-inset "
+    ^ colors
+  in
+  span [ class_ "%s" class_string ] [ txt "%s" text ]
+;;
+
 type guest =
   { id : int
   ; name : string
@@ -23,26 +40,36 @@ let get_guest pool id =
   | Ok guest -> Lwt.return guest
 ;;
 
+let get_checkbox_value lst label =
+  match List.find_opt (fun (key, _) -> key = label) lst with
+  | Some _ -> 1
+  | None -> 0
+;;
+
 let update_guest req pool =
   let id = Dream.param req "id" |> int_of_string in
   let* form = Dream.form ~csrf:false req in
   match form with
   | `Ok data -> begin
-    let rsvp =
-      match List.find_opt (fun (key, _) -> key = "rsvp") data with
-      | Some _ -> 1
-      | None -> 0
-    in
+    let rsvp = get_checkbox_value data "rsvp" in
+    let invite_sent = get_checkbox_value data "invite_sent" in
+    let save_the_date = get_checkbox_value data "save_the_date" in
     let query =
       [%rapper
         execute
           {sql|
             UPDATE guests
-            SET rsvp = %int{rsvp}
+            SET rsvp = %int{rsvp},
+                invite_sent = %int{invite_sent},
+                save_the_date = %int{save_the_date}
             WHERE id = %int{id}
       |sql}]
     in
-    let* result = Caqti_lwt.Pool.use (fun db -> query db ~id ~rsvp) pool in
+    let* result =
+      Caqti_lwt.Pool.use
+        (fun db -> query db ~id ~rsvp ~invite_sent ~save_the_date)
+        pool
+    in
     begin
       match result with
       | Error e -> failwith (Caqti_error.show e)
@@ -72,23 +99,23 @@ let row req pool =
            [ txt "%i" guest.amount ]
        ; td
            [ class_ "whitespace-nowrap px-3 py-4 text-sm text-gray-500" ]
-           [ txt "%b" guest.rsvp ]
+           [ badge guest.rsvp ]
        ; td
            [ class_ "whitespace-nowrap px-3 py-4 text-sm text-gray-500" ]
-           [ txt "%b" guest.invite_sent ]
+           [ badge guest.invite_sent ]
        ; td
            [ class_ "whitespace-nowrap px-3 py-4 text-sm text-gray-500" ]
-           [ txt "%b" guest.save_the_date ]
+           [ badge guest.save_the_date ]
        ; td
            [ class_ "whitespace-nowrap px-3 py-4 text-sm text-gray-500" ]
            [ button
                [ Hx.get "/guests/%i/edit" guest.id
                ; class_
-                   "rounded bg-indigo-600 px-2 py-1 text-xs font-semibold \
-                    text-white shadow-sm hover:bg-indigo-500 \
+                   "rounded bg-gray-900 px-2 py-1 text-xs font-semibold \
+                    text-white shadow-sm hover:bg-opacity-90 \
                     focus-visible:outline focus-visible:outline-2 \
                     focus-visible:outline-offset-2 \
-                    focus-visible:outline-indigo-600"
+                    focus-visible:outline-gray-900"
                ]
                [ txt "Edit" ]
            ]

@@ -49,21 +49,38 @@ let row _ pool =
            ]
        ; td
            [ class_ "whitespace-nowrap px-3 py-4 text-sm text-gray-500" ]
-           [ txt "%b" guest.invite_sent ]
+           [ input
+               ([ type_ "checkbox"; name "invite_sent"; value "1" ]
+                @ if guest.invite_sent then [ checked ] else [])
+           ]
        ; td
            [ class_ "whitespace-nowrap px-3 py-4 text-sm text-gray-500" ]
-           [ txt "%b" guest.save_the_date ]
+           [ input
+               ([ type_ "checkbox"; name "save_the_date"; value "1" ]
+                @ if guest.save_the_date then [ checked ] else [])
+           ]
        ; td
            [ class_ "whitespace-nowrap px-3 py-4 text-sm text-gray-500" ]
            [ button
                [ Hx.put "/guests/%i" guest.id
                ; Hx.include_ "closest tr"
                ; class_
-                   "rounded bg-indigo-600 px-2 py-1 text-xs font-semibold \
-                    text-white shadow-sm hover:bg-indigo-500 \
+                   "rounded bg-gray-100 px-2 py-1 text-xs font-semibold \
+                    text-black shadow-sm hover:bg-gray-200 \
                     focus-visible:outline focus-visible:outline-2 \
                     focus-visible:outline-offset-2 \
-                    focus-visible:outline-indigo-600"
+                    focus-visible:outline-gray-100"
+               ]
+               [ txt "Cancel" ]
+           ; button
+               [ Hx.put "/guests/%i" guest.id
+               ; Hx.include_ "closest tr"
+               ; class_
+                   "rounded bg-gray-900 px-2 py-1 text-xs font-semibold \
+                    text-white shadow-sm hover:bg-opacity-90 \
+                    focus-visible:outline focus-visible:outline-2 \
+                    focus-visible:outline-offset-2 \
+                    focus-visible:outline-gray-900"
                ]
                [ txt "Save" ]
            ]

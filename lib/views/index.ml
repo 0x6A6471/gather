@@ -105,7 +105,7 @@ let page guests =
                                                  text-sm font-semibold \
                                                  text-gray-900"
                                             ]
-                                            [ txt "Edit" ]
+                                            [ txt "Actions" ]
                                         ]
                                     ]
                                 ; tbody
@@ -165,15 +165,15 @@ let page guests =
                                                [ button
                                                    [ Hx.get "/guests/%i/edit" id
                                                    ; class_
-                                                       "rounded bg-indigo-600 \
+                                                       "rounded bg-gray-900 \
                                                         px-2 py-1 text-xs \
                                                         font-semibold \
                                                         text-white shadow-sm \
-                                                        hover:bg-indigo-500 \
+                                                        hover:bg-opacity-90 \
                                                         focus-visible:outline \
                                                         focus-visible:outline-2 \
                                                         focus-visible:outline-offset-2 \
-                                                        focus-visible:outline-indigo-600"
+                                                        focus-visible:outline-gray-900"
                                                    ]
                                                    [ txt "Edit" ]
                                                ]
