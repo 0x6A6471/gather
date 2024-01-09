@@ -1,16 +1,8 @@
 open Lwt.Syntax
+open Models.Guest
 
-type guest =
-  { id : int
-  ; name : string
-  ; address : string
-  ; amount : int
-  ; rsvp : bool
-  ; invite_sent : bool
-  ; save_the_date : bool
-  }
-
-let get_guest pool id =
+let get_guest req pool =
+  let id = Dream.param req "id" |> int_of_string in
   let query =
     [%rapper
       get_one
@@ -23,10 +15,10 @@ let get_guest pool id =
   | Ok guest -> Lwt.return guest
 ;;
 
-let row _ pool =
+let row req pool =
   let open Dream_html in
   let open HTML in
-  let* guest = get_guest pool 1 in
+  let* guest = get_guest req pool in
   Lwt.return
     (tr
        []
