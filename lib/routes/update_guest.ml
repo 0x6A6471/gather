@@ -2,19 +2,6 @@ open Lwt.Syntax
 open Components.Badge
 open Models.Guest
 
-let get_guest pool id =
-  let query =
-    [%rapper
-      get_one
-        {sql| SELECT @int{id}, @string{name}, @string{address}, @int{amount}, @bool{rsvp}, @bool{invite_sent}, @bool{save_the_date} FROM guests WHERE id = %int{id} |sql}
-        record_out]
-  in
-  let* result = Caqti_lwt.Pool.use (fun db -> query db ~id) pool in
-  match result with
-  | Error e -> failwith (Caqti_error.show e)
-  | Ok guest -> Lwt.return guest
-;;
-
 let get_checkbox_value lst label =
   match List.find_opt (fun (key, _) -> key = label) lst with
   | Some _ -> 1
@@ -48,7 +35,7 @@ let update_guest req pool =
     begin
       match result with
       | Error e -> failwith (Caqti_error.show e)
-      | Ok () -> get_guest pool id
+      | Ok () -> get_guest req pool
     end
   end
   | _ -> failwith "Form error"
