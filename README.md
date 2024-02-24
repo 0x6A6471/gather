@@ -1,4 +1,5 @@
 ### TODO
 
-- melange
-- tailwind colors
+- setup server
+- db
+- auth

@@ -33,7 +33,7 @@
   (alias vite)
    (targets (dir dist))
    (deps
-     (alias_rec registry) 
+     (alias_rec client) 
      (:vite ./vite.config.js) 
      (:index_html ./index.html))
    (action
@@ -48,7 +48,7 @@
 ;   (here, es6 and mjs).
   (melange.emit
    (target output)
-   (alias registry)
+   (alias client)
    (libraries app)
    (module_systems (es6 mjs)))
 

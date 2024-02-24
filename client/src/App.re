@@ -29,7 +29,7 @@
      * Each `~` symbol represents a named argument, similar to an object's key 
      * in JS/TS. The `~name`, `~directory`, `~node_package_manager`, and other 
      * arguments are akin to specifying properties in a JavaScript object. The 
-     * placeholders inside the curly braces (e.g., `registry`) will be replaced 
+     * placeholders inside the curly braces (e.g., `client`) will be replaced 
      * with actual values, just like template literals or variables in JS/TS.
      *
      * The `()` at the end of the function call represents the `unit` type in 
@@ -40,8 +40,8 @@
      */
     let configuration =
       Cma_configuration.Configuration.make(
-        ~name="registry",
-        ~directory="/Users/jakequinter/Developer/ocaml/registry",
+        ~name="client",
+        ~directory="/Users/jakequinter/Developer/ocaml/registry/client",
         ~node_package_manager=Bun,
         ~bundler=Vite,
         ~is_react_app=true,
