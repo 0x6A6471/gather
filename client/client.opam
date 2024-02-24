@@ -6,9 +6,9 @@ maintainer: ["Your Name <your.email@gmail.com>"]
 authors: ["Your Name <your.email@gmail.com>"]
 license: "MIT"
 tags: ["reasonml," "ocaml," "melange"]
-homepage: "https://github.com/your-username/registry"
-doc: "https://github.com/your-username/registry"
-bug-reports: "https://github.com/your-username/registry/issues"
+homepage: "https://github.com/your-username/client"
+doc: "https://github.com/your-username/client"
+bug-reports: "https://github.com/your-username/client/issues"
 depends: [
   "dune" {>= "3.11" & >= "3.11"}
   "melange" {>= "2.1.0"}
@@ -34,4 +34,4 @@ build: [
     "@doc" {with-doc}
   ]
 ]
-dev-repo: "git+https://github.com/your-username/registry.git"
+dev-repo: "git+https://github.com/your-username/client.git"

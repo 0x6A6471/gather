@@ -1,6 +1,0 @@
-(library
- (name models)
- (libraries 
-   dream
-   ppx_rapper_lwt)
- (preprocess (pps ppx_rapper)))
