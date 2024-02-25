@@ -1,4 +1,6 @@
 (executable
  (public_name server)
  (name main)
- (libraries server))
+ (libraries dream dream-livereload server)
+ (preprocess
+  (pps lwt_ppx ppx_yojson_conv)))
