@@ -1,6 +1,13 @@
 (executable
  (public_name server)
  (name main)
- (libraries dream dream-livereload server)
+ (libraries
+  caqti
+  caqti-driver-sqlite3
+  caqti-lwt
+  dream
+  dream-livereload
+  ppx_rapper_lwt
+  server)
  (preprocess
-  (pps lwt_ppx ppx_yojson_conv)))
+  (pps ppx_yojson_conv ppx_rapper)))
