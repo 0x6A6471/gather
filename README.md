@@ -9,6 +9,7 @@
 
 ### Client
 
+- [x] setup router
 - [ ] login page
 - [ ] auth
 - [ ] home page
