@@ -39,18 +39,35 @@ let validate_user_credentials email password pool =
   | Error _ -> Lwt.return None
 ;;
 
+let cors_middleware inner_handler req =
+  let new_headers =
+    [ "Allow", "OPTIONS, GET, HEAD, POST" (*TODO: update header*)
+    ; "Access-Control-Allow-Origin", "http://localhost:5173"
+    ; "Access-Control-Allow-Headers", "*"
+    ]
+  in
+  let+ response = inner_handler req in
+  new_headers
+  |> List.map (fun (key, value) -> Dream.add_header response key value)
+  |> ignore;
+  response
+;;
+
 let () =
   Dream.run
   @@ Dream.logger
   @@ Dream.sql_pool "sqlite3:./registry.db"
   (* @@ Dream.origin_referrer_check *)
   (* @@ Dream.sql_sessions ~lifetime:3600.0 *)
+  @@ cors_middleware
   @@ Dream.router
-       [ Dream.get "/" (fun _request ->
+       [ Dream.options "/api/login" (fun _req ->
+           Dream.respond ~headers:[ "Allow", "OPTIONS, GET, HEAD, POST" ] "")
+       ; Dream.get "/" (fun _request ->
            let json_string = {|{ "status": "ok" }|} in
            let json = Yojson.Safe.from_string json_string in
            json |> Yojson.Safe.to_string |> Dream.json)
-       ; Dream.post "/login" (fun request ->
+       ; Dream.post "/api/login" (fun request ->
            let* body = Dream.body request in
            let user = body |> Yojson.Safe.from_string |> user_of_yojson in
            let* user_opt =

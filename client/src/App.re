@@ -3,11 +3,13 @@ module App = {
   let make = () => {
     let url = ReasonReactRouter.useUrl();
 
-    switch (url.path) {
-    | [] => <Pages.HomePage />
-    | ["login"] => <Pages.LoginPage />
-    | _ => <h1> {React.string("404")} </h1>
-    };
+    <Context.AuthContext.AuthProvider>
+      {switch (url.path) {
+       | [] => <Pages.HomePage />
+       | ["login"] => <Pages.LoginPage />
+       | _ => <h1> {React.string("404")} </h1>
+       }}
+    </Context.AuthContext.AuthProvider>;
   };
 };
 

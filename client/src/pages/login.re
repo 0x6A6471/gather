@@ -5,9 +5,34 @@ let make = () => {
 
   let handleSubmit = e => {
     ReactEvent.Form.preventDefault(e);
-
-    Js.log(email);
-    Js.log(password);
+    let payload = Js.Dict.empty();
+    Js.Dict.set(payload, "email", Js.Json.string(email));
+    Js.Dict.set(payload, "password", Js.Json.string(password));
+    Js.Promise.(
+      Fetch.fetchWithInit(
+        "http://localhost:8080/api/login",
+        Fetch.RequestInit.make(
+          ~method_=Post,
+          ~body=
+            Fetch.BodyInit.make(
+              Js.Json.stringify(Js.Json.object_(payload)),
+            ),
+          ~headers=
+            Fetch.HeadersInit.make({"Content-Type": "application/json"}),
+          (),
+        ),
+      )
+      |> then_(Fetch.Response.json)
+      |> then_(json => {
+           Js.log(json);
+           resolve();
+         })
+      |> catch(err => {
+           Js.log2("Error:", err);
+           resolve();
+         })
+    )
+    |> ignore;
   };
 
   <div className="h-screen flex flex-col items-center justify-center">

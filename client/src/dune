@@ -1,6 +1,6 @@
 (library
  (name app)
  (modes melange)
- (libraries bindings reason-react pages)
+ (libraries bindings reason-react context pages)
  (preprocess
   (pps melange.ppx reason-react-ppx)))
