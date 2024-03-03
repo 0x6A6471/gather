@@ -1,1 +1,1 @@
-module AuthContext = AuthContext;
+module AuthContext = Auth;

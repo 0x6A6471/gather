@@ -3,11 +3,11 @@ type user = {
   email: string,
 };
 
-type authContext = {user: option(user)};
+type t = {user: option(user)};
 
-let initContext = {user: None};
+let init = {user: None};
 
-let authContext = React.createContext(initContext);
+let context = React.createContext(init);
 
 module AuthContextProvider = {
   let makeProps = (~value, ~children, ()) => {
@@ -15,7 +15,7 @@ module AuthContextProvider = {
     "children": children,
   };
 
-  let make = React.Context.provider(authContext);
+  let make = React.Context.provider(context);
 };
 
 module AuthProvider = {
