@@ -1,6 +1,6 @@
 (library
  (name pages)
  (modes melange)
- (libraries reason-react cma_configuration components)
+ (libraries reason-react components)
  (preprocess
   (pps melange.ppx reason-react-ppx)))

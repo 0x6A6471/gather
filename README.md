@@ -10,6 +10,7 @@
 ### Client
 
 - [x] setup router
-- [ ] login page
+- [x] login page
+- [ ] setup tailwindcss w/o cdn script
 - [ ] auth
 - [ ] home page
