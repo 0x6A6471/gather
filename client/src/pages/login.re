@@ -1,13 +1,12 @@
 [@react.component]
 let make = () => {
+  let auth = Context.AuthContext.useAuth();
   let (email, setEmail) = React.useState(() => "");
   let (password, setPassword) = React.useState(() => "");
 
   let handleSubmit = e => {
     ReactEvent.Form.preventDefault(e);
-
-    Js.log(email);
-    Js.log(password);
+    auth.login(email, password);
   };
 
   <div className="h-screen flex flex-col items-center justify-center">
