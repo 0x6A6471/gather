@@ -26,6 +26,19 @@ type user =
   }
 [@@deriving yojson]
 
+let find_user_by_id id pool =
+  let query =
+    [%rapper
+      get_one
+        {sql| SELECT @int{id}, @string{email} FROM users WHERE id = %int{id} |sql}
+        record_out]
+  in
+  let* result = Caqti_lwt.Pool.use (fun db -> query db ~id) pool in
+  match result with
+  | Ok user -> Lwt.return (Some user)
+  | Error _ -> Lwt.return None
+;;
+
 let validate_user_credentials email password pool =
   let query =
     [%rapper
@@ -68,13 +81,36 @@ let () =
   @@ Dream.logger
   @@ Dream.sql_pool "sqlite3:./registry.db"
   (* @@ Dream.origin_referrer_check *)
-  (* @@ Dream.sql_sessions ~lifetime:3600.0 *)
+  @@ Dream.sql_sessions ~lifetime:3600.0
   @@ cors_middleware
   @@ Dream.router
        [ Dream.get "/" (fun _request ->
            let json_string = {|{ "status": "ok" }|} in
            let json = Yojson.Safe.from_string json_string in
            json |> Yojson.Safe.to_string |> Dream.json)
+         (*TODO: add a get request to validate?
+           * maybe just try and log the request and see if we can get the dream session
+           * try just returning the dream session
+         *)
+       ; Dream.get "/me" (fun request ->
+           let session = Dream.session "user_id" request in
+           match session with
+           | Some user_id ->
+             let user_id = int_of_string user_id in
+             let* user_opt = find_user_by_id user_id pool in
+             begin
+               match user_opt with
+               | Some user ->
+                 let user_json = yojson_of_t user in
+                 Dream.json (Yojson.Safe.to_string user_json)
+               | None ->
+                 let err_json = {|{ "error": "user not found" }|} in
+                 Dream.json ~status:`Unauthorized err_json
+             end
+           | None ->
+             Dream.json
+               ~status:`Unauthorized
+               "{ \"error\": \"No active session.\" }")
        ; Dream.post "/login" (fun request ->
            let* body = Dream.body request in
            let user = body |> Yojson.Safe.from_string |> user_of_yojson in
@@ -83,6 +119,9 @@ let () =
            in
            match user_opt with
            | Some user ->
+             let* _ =
+               Dream.put_session "user_id" (string_of_int user.id) request
+             in
              let user_json = yojson_of_t user in
              Dream.json (Yojson.Safe.to_string user_json)
            | _ ->
