@@ -41,16 +41,26 @@ let validate_user_credentials email password pool =
 
 let cors_middleware inner_handler req =
   let new_headers =
-    [ "Allow", "OPTIONS, GET, HEAD, POST" (*TODO: update header*)
+    [ "Allow", "OPTIONS, GET, HEAD, POST"
     ; "Access-Control-Allow-Origin", "http://localhost:5173"
-    ; "Access-Control-Allow-Headers", "*"
+    ; "Access-Control-Allow-Methods", "OPTIONS, GET, POST, DELETE, PUT"
+    ; "Access-Control-Allow-Headers", "Content-Type, Accept"
+    ; "Access-Control-Allow-Credentials", "true"
     ]
   in
-  let+ response = inner_handler req in
-  new_headers
-  |> List.map (fun (key, value) -> Dream.add_header response key value)
-  |> ignore;
-  response
+  match Dream.method_ req with
+  | `OPTIONS -> Dream.respond ~headers:new_headers ""
+  | _ ->
+    let* response = inner_handler req in
+    let response_with_headers =
+      List.fold_left
+        (fun resp (key, value) ->
+          Dream.add_header resp key value;
+          resp)
+        response
+        new_headers
+    in
+    Lwt.return response_with_headers
 ;;
 
 let () =
@@ -61,9 +71,7 @@ let () =
   (* @@ Dream.sql_sessions ~lifetime:3600.0 *)
   @@ cors_middleware
   @@ Dream.router
-       [ Dream.options "/login" (fun _req ->
-           Dream.respond ~headers:[ "Allow", "OPTIONS, GET, HEAD, POST" ] "")
-       ; Dream.get "/" (fun _request ->
+       [ Dream.get "/" (fun _request ->
            let json_string = {|{ "status": "ok" }|} in
            let json = Yojson.Safe.from_string json_string in
            json |> Yojson.Safe.to_string |> Dream.json)
