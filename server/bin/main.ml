@@ -61,13 +61,13 @@ let () =
   (* @@ Dream.sql_sessions ~lifetime:3600.0 *)
   @@ cors_middleware
   @@ Dream.router
-       [ Dream.options "/api/login" (fun _req ->
+       [ Dream.options "/login" (fun _req ->
            Dream.respond ~headers:[ "Allow", "OPTIONS, GET, HEAD, POST" ] "")
        ; Dream.get "/" (fun _request ->
            let json_string = {|{ "status": "ok" }|} in
            let json = Yojson.Safe.from_string json_string in
            json |> Yojson.Safe.to_string |> Dream.json)
-       ; Dream.post "/api/login" (fun request ->
+       ; Dream.post "/login" (fun request ->
            let* body = Dream.body request in
            let user = body |> Yojson.Safe.from_string |> user_of_yojson in
            let* user_opt =
