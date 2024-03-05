@@ -9,6 +9,7 @@
   - [x] login
   - [x] validate
   - [ ] logout
+- [ ] separate routes, cleanup & find a structure
 
 ### Client
 
