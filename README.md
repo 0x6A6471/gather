@@ -3,14 +3,21 @@
 ### Server
 
 - [x] setup dream server
-  - [ ] setup sessions
-- [ ] setup sqlite db
-- [ ] setup auth route
+  - [x] setup sessions/cookies
+- [x] setup sqlite db
+- [ ] auth
+  - [x] login
+  - [x] validate
+  - [ ] logout
 
 ### Client
 
 - [x] setup router
 - [x] login page
+- [x] integrate validate route from server using session
 - [ ] setup tailwindcss w/o cdn script
-- [ ] auth
+- [ ] auth context
+  - [x] login
+  - [x] validate
+  - [ ] logout
 - [ ] home page

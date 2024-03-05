@@ -6,9 +6,16 @@ type user = {
 type t = {
   user: option(user),
   login: (string, string) => unit,
+  validate: unit => unit,
+  loading: bool,
 };
 
-let init = {user: None, login: (_email, _password) => ()};
+let init = {
+  user: None,
+  login: (_email, _password) => (),
+  validate: () => (),
+  loading: true,
+};
 
 let context = React.createContext(init);
 
@@ -33,6 +40,7 @@ module AuthProvider = {
   [@react.component]
   let make = (~children) => {
     let (user, setUser) = React.useState(() => None);
+    let (loading, setLoading) = React.useState(_ => true);
 
     let login = (email: string, password: string) => {
       let payload = Js.Dict.empty();
@@ -47,6 +55,7 @@ module AuthProvider = {
               Fetch.BodyInit.make(
                 Js.Json.stringify(Js.Json.object_(payload)),
               ),
+            ~credentials=Include,
             ~headers=
               Fetch.HeadersInit.make({"Content-Type": "application/json"}),
             (),
@@ -54,14 +63,13 @@ module AuthProvider = {
         )
         |> then_(Fetch.Response.json)
         |> then_(json => {
-             Js.log(json);
              let user = json |> Decode.user;
              setUser(_ => Some(user));
              ReasonReactRouter.push("/");
              resolve();
            })
         |> catch(error => {
-             Js.log(error);
+             Js.log2("Error in AuthContext login:", error);
              setUser(_ => None);
              resolve();
            })
@@ -69,7 +77,41 @@ module AuthProvider = {
       |> ignore;
     };
 
-    let value = {user, login};
+    let validate = () => {
+      Js.Promise.(
+        Fetch.fetchWithInit(
+          "http://localhost:8080/me",
+          Fetch.RequestInit.make(
+            ~method_=Get,
+            ~credentials=Include,
+            ~headers=
+              Fetch.HeadersInit.make({"Content-Type": "application/json"}),
+            (),
+          ),
+        )
+        |> then_(Fetch.Response.json)
+        |> then_(json => {
+             let user = json |> Decode.user;
+             setUser(_ => Some(user));
+             setLoading(_ => false);
+             resolve();
+           })
+        |> catch(error => {
+             Js.log2("Error in AuthContext Validate:", error);
+             setUser(_ => None);
+             setLoading(_ => false);
+             resolve();
+           })
+      )
+      |> ignore;
+    };
+
+    React.useEffect0(() => {
+      validate();
+      None;
+    });
+
+    let value = {user, login, validate, loading};
 
     <AuthContextProvider value> children </AuthContextProvider>;
   };
