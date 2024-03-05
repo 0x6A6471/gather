@@ -2,21 +2,30 @@
 let make = () => {
   let auth = Context.AuthContext.useAuth();
 
+  let userExists = auth.user |> Belt.Option.isSome;
+
   React.useEffect1(
     () => {
-      switch (auth.user) {
-      | None =>
-        ReasonReactRouter.push("/login");
-        None;
-      | Some(_) => None
-      }
+      if (!auth.loading) {
+        switch (auth.user) {
+        | None => ReasonReactRouter.push("/login")
+        | Some(_) => ()
+        };
+      };
+      None;
     },
-    [|auth.user|],
+    [|auth.loading, userExists|],
   );
 
-  switch (auth.user) {
-  | Some(user) => <h1> {React.string("Hi, " ++ user.email)} </h1>
-  | None => React.null
+  if (auth.loading) {
+    <div> {React.string("Loading...")} </div>;
+  } else {
+    switch (auth.user) {
+    | Some(user) =>
+      <Components.Link to_="/login">
+        {React.string("Go to login, " ++ user.email)}
+      </Components.Link>
+    | None => React.null
+    };
   };
 };
-

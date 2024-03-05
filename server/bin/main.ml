@@ -88,10 +88,6 @@ let () =
            let json_string = {|{ "status": "ok" }|} in
            let json = Yojson.Safe.from_string json_string in
            json |> Yojson.Safe.to_string |> Dream.json)
-         (*TODO: add a get request to validate?
-           * maybe just try and log the request and see if we can get the dream session
-           * try just returning the dream session
-         *)
        ; Dream.get "/me" (fun request ->
            let session = Dream.session "user_id" request in
            match session with
@@ -104,10 +100,12 @@ let () =
                  let user_json = yojson_of_t user in
                  Dream.json (Yojson.Safe.to_string user_json)
                | None ->
+                 let* _ = Dream.invalidate_session request in
                  let err_json = {|{ "error": "user not found" }|} in
                  Dream.json ~status:`Unauthorized err_json
              end
            | None ->
+             let* _ = Dream.invalidate_session request in
              Dream.json
                ~status:`Unauthorized
                "{ \"error\": \"No active session.\" }")
@@ -124,7 +122,8 @@ let () =
              in
              let user_json = yojson_of_t user in
              Dream.json (Yojson.Safe.to_string user_json)
-           | _ ->
+           | None ->
+             let* _ = Dream.invalidate_session request in
              let err_json = {|{ "error": "invalid credentials" }|} in
              Dream.json ~status:`Unauthorized err_json)
        ]
