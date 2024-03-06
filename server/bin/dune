@@ -1,13 +1,4 @@
 (executable
  (public_name server)
  (name main)
- (libraries
-  caqti
-  caqti-driver-sqlite3
-  caqti-lwt
-  dream
-  dream-livereload
-  ppx_rapper_lwt
-  server)
- (preprocess
-  (pps ppx_yojson_conv ppx_rapper)))
+ (libraries caqti caqti-driver-sqlite3 caqti-lwt dream routes))
