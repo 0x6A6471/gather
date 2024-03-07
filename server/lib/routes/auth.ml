@@ -78,5 +78,8 @@ let routes pool =
         let* _ = Dream.invalidate_session request in
         let err_json = {|{ "error": "invalid credentials" }|} in
         Dream.json ~status:`Unauthorized err_json)
+  ; Dream.post "/logout" (fun request ->
+      let* _ = Dream.invalidate_session request in
+      Dream.json "{ \"message\": \"success\" }")
   ]
 ;;

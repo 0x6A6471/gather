@@ -5,10 +5,10 @@
 - [x] setup dream server
   - [x] setup sessions/cookies
 - [x] setup sqlite db
-- [ ] auth
+- [x] auth
   - [x] login
   - [x] validate
-  - [ ] logout
+  - [x] logout
 - [x] separate routes, cleanup & find a structure
 
 ### Client
@@ -17,7 +17,7 @@
 - [x] login page
 - [x] integrate validate route from server using session
 - [ ] setup tailwindcss w/o cdn script
-- [ ] auth context
+- [x] auth context
   - [x] login
   - [x] validate
   - [ ] logout

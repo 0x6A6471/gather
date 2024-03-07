@@ -6,6 +6,7 @@ type user = {
 type t = {
   user: option(user),
   login: (string, string) => unit,
+  logout: unit => unit,
   validate: unit => unit,
   loading: bool,
 };
@@ -13,6 +14,7 @@ type t = {
 let init = {
   user: None,
   login: (_email, _password) => (),
+  logout: () => (),
   validate: () => (),
   loading: true,
 };
@@ -77,6 +79,25 @@ module AuthProvider = {
       |> ignore;
     };
 
+    let logout = () => {
+      Js.Promise.(
+        Fetch.fetchWithInit(
+          "http://localhost:8080/logout",
+          Fetch.RequestInit.make(~method_=Post, ~credentials=Include, ()),
+        )
+        |> then_(Fetch.Response.json)
+        |> then_(_ => {
+             ReasonReactRouter.push("/login");
+             resolve();
+           })
+        |> catch(error => {
+             Js.log2("Error in AuthContext logout:", error);
+             resolve();
+           })
+      )
+      |> ignore;
+    };
+
     let validate = () => {
       Js.Promise.(
         Fetch.fetchWithInit(
@@ -111,7 +132,7 @@ module AuthProvider = {
       None;
     });
 
-    let value = {user, login, validate, loading};
+    let value = {user, login, logout, validate, loading};
 
     <AuthContextProvider value> children </AuthContextProvider>;
   };
