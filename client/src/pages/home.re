@@ -22,9 +22,14 @@ let make = () => {
   } else {
     switch (auth.user) {
     | Some(user) =>
-      <Components.Link to_="/login">
-        {React.string("Go to login, " ++ user.email)}
-      </Components.Link>
+      <div>
+        <Components.Link to_="/login">
+          {React.string("Go to login, " ++ user.email)}
+        </Components.Link>
+        <button onClick={_ => auth.logout()}>
+          {React.string("Logout")}
+        </button>
+      </div>
     | None => React.null
     };
   };
