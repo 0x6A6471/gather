@@ -10,6 +10,11 @@
   - [x] login
   - [x] validate
   - [x] logout
+- [x] guest routes
+  - [x] get
+  - [ ] post
+  - [ ] put
+  - [ ] delete
 - [x] separate routes, cleanup & find a structure
 
 ### Client
@@ -21,4 +26,9 @@
   - [x] validate w/ dream sql session
   - [x] logout
 - [ ] home page
+  - [x] table to display list of guests
+  - [ ] add
+  - [ ] edit
+  - [ ] delete
+- [ ] reasonML bindings for Radix Primitives
 - [ ] setup tailwindcss w/o cdn script
