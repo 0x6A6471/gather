@@ -1,1 +1,3 @@
-module Link = Link;
+module Ui = Ui;
+
+module GuestsTable = Guests_table;
