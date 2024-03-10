@@ -17,6 +17,26 @@ let make = (~open_, ~setOpen_) => {
           {React.string("Modal Title")}
         </h1>
         <p className="text-center"> {React.string("Modal Description")} </p>
+        <div className="mt-8">
+          <label
+            htmlFor="name"
+            className="block text-sm font-medium leading-6 text-gray-900">
+            {React.string("Name")}
+          </label>
+          <div className="mt-0.5">
+            <input
+              id="name"
+              name="name"
+              autoFocus=true
+              required=true
+              className="px-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-200 placeholder:text-gray-400 focus:ring-inset focus:ring-gray-400 focus:outline-none sm:text-sm sm:leading-6"
+              //onChange={e => {
+              // let email = ReactEvent.Form.target(e)##value;
+              // setEmail(_ => email);
+              //}}
+            />
+          </div>
+        </div>
       </div>
     </dialog>
   </div>;

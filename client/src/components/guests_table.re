@@ -29,7 +29,7 @@ module Decode = {
 
 [@react.component]
 let make = () => {
-  let (modalOpen, setModalOpen) = React.useState(_ => true);
+  let (modalOpen, setModalOpen) = React.useState(_ => false);
   let (guests, setGuests) = React.useState(_ => []);
 
   let getGuests = () => {
