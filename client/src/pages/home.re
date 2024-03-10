@@ -23,6 +23,7 @@ let make = () => {
     switch (auth.user) {
     | Some(user) =>
       <div>
+        <img src="/test.jpg" alt="test" />
         <Components.Ui.Link to_="/login">
           {React.string("Go to login, " ++ user.email)}
         </Components.Ui.Link>
