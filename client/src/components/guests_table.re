@@ -29,6 +29,7 @@ module Decode = {
 
 [@react.component]
 let make = () => {
+  let (modalOpen, setModalOpen) = React.useState(_ => true);
   let (guests, setGuests) = React.useState(_ => []);
 
   let getGuests = () => {
@@ -61,111 +62,119 @@ let make = () => {
     None;
   });
 
-  <div className="px-4 sm:px-6 lg:px-8">
-    <div className="mt-8 flow-root">
-      <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-        <div
-          className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+  <div>
+    <Ui.Modal open_=modalOpen setOpen_=setModalOpen />
+    <div className="px-4 sm:px-6 lg:px-8">
+      <div className="mt-8 flow-root">
+        <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+          <button
+            className="rounded-md bg-gray-900 px-2.5 py-1.5 text-sm font-medium text-white shadow-sm hover:bg-gray-800 float-right mr-8"
+            onClick={_ => setModalOpen(_ => !modalOpen)}>
+            {React.string("Add Guest")}
+          </button>
           <div
-            className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg">
-            <table className="min-w-full divide-y divide-gray-300">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th
-                    scope="col"
-                    className="py-3.5 px-4 text-left text-sm font-medium text-gray-900">
-                    {React.string("Name")}
-                  </th>
-                  <th
-                    scope="col"
-                    className="py-3.5 px-4 text-left text-sm font-medium text-gray-900">
-                    {React.string("Address")}
-                  </th>
-                  <th
-                    scope="col"
-                    className="py-3.5 px-4 text-left text-sm font-medium text-gray-900">
-                    {React.string("# of Guests")}
-                  </th>
-                  <th
-                    scope="col"
-                    className="py-3.5 px-4 text-left text-sm font-medium text-gray-900">
-                    {React.string("RSVP Sent")}
-                  </th>
-                  <th
-                    scope="col"
-                    className="py-3.5 px-4 text-left text-sm font-medium text-gray-900">
-                    {React.string("Invite Sent")}
-                  </th>
-                  <th
-                    scope="col"
-                    className="py-3.5 px-4 text-left text-sm font-medium text-gray-900">
-                    {React.string("STD Sent")}
-                  </th>
-                  <th scope="col" className="relative py-3.5 px-4">
-                    <span className="sr-only">
-                      {React.string("Actions")}
-                    </span>
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-200 bg-white">
-                {guests
-                 |> List.map(guest =>
-                      <tr key={string_of_int(guest.id)}>
-                        <td
-                          className="whitespace-nowrap p-4 text-sm font-medium text-gray-900">
-                          {React.string(guest.name)}
-                        </td>
-                        <td
-                          className="whitespace-nowrap p-4 text-sm text-gray-500">
-                          {React.string(guest.address)}
-                          {React.string(", ")}
-                          {React.string(guest.city)}
-                          {React.string(", ")}
-                          {React.string(guest.state)}
-                          {React.string(" ")}
-                          {React.string(guest.zip)}
-                        </td>
-                        <td
-                          className="whitespace-nowrap p-4 text-sm font-medium text-gray-500">
-                          {React.string(string_of_int(guest.guest_amount))}
-                        </td>
-                        <td className="whitespace-nowrap p-4">
-                          <Ui.Badge
-                            label={guest.rsvp_sent === 1 ? "Yes" : "No"}
-                            color={guest.rsvp_sent === 1 ? `Green : `Red}
-                          />
-                        </td>
-                        <td className="whitespace-nowrap p-4">
-                          <Ui.Badge
-                            label={guest.invite_sent === 1 ? "Yes" : "No"}
-                            color={guest.invite_sent === 1 ? `Green : `Red}
-                          />
-                        </td>
-                        <td className="whitespace-nowrap p-4">
-                          <Ui.Badge
-                            label={
-                              guest.save_the_date_sent === 1 ? "Yes" : "No"
-                            }
-                            color={
-                              guest.save_the_date_sent === 1 ? `Green : `Red
-                            }
-                          />
-                        </td>
-                        <td
-                          className="whitespace-nowrap p-4 text-sm text-gray-500">
-                          <a
-                            href="#"
-                            className="text-blue-500 hover:text-blue-700">
-                            {React.string("Actions")}
-                          </a>
-                        </td>
-                      </tr>
-                    )
-                 |> Array.of_list
-                 |> React.array}
-              </tbody>
-            </table>
+            className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+            <div
+              className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg">
+              <table className="min-w-full divide-y divide-gray-300">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th
+                      scope="col"
+                      className="py-3.5 px-4 text-left text-sm font-medium text-gray-900">
+                      {React.string("Name")}
+                    </th>
+                    <th
+                      scope="col"
+                      className="py-3.5 px-4 text-left text-sm font-medium text-gray-900">
+                      {React.string("Address")}
+                    </th>
+                    <th
+                      scope="col"
+                      className="py-3.5 px-4 text-left text-sm font-medium text-gray-900">
+                      {React.string("# of Guests")}
+                    </th>
+                    <th
+                      scope="col"
+                      className="py-3.5 px-4 text-left text-sm font-medium text-gray-900">
+                      {React.string("RSVP Sent")}
+                    </th>
+                    <th
+                      scope="col"
+                      className="py-3.5 px-4 text-left text-sm font-medium text-gray-900">
+                      {React.string("Invite Sent")}
+                    </th>
+                    <th
+                      scope="col"
+                      className="py-3.5 px-4 text-left text-sm font-medium text-gray-900">
+                      {React.string("STD Sent")}
+                    </th>
+                    <th scope="col" className="relative py-3.5 px-4">
+                      <span className="sr-only">
+                        {React.string("Actions")}
+                      </span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-200 bg-white">
+                  {guests
+                   |> List.map(guest =>
+                        <tr key={string_of_int(guest.id)}>
+                          <td
+                            className="whitespace-nowrap p-4 text-sm font-medium text-gray-900">
+                            {React.string(guest.name)}
+                          </td>
+                          <td
+                            className="whitespace-nowrap p-4 text-sm text-gray-500">
+                            {React.string(guest.address)}
+                            {React.string(", ")}
+                            {React.string(guest.city)}
+                            {React.string(", ")}
+                            {React.string(guest.state)}
+                            {React.string(" ")}
+                            {React.string(guest.zip)}
+                          </td>
+                          <td
+                            className="whitespace-nowrap p-4 text-sm font-medium text-gray-500">
+                            {React.string(string_of_int(guest.guest_amount))}
+                          </td>
+                          <td className="whitespace-nowrap p-4">
+                            <Ui.Badge
+                              label={guest.rsvp_sent === 1 ? "Yes" : "No"}
+                              color={guest.rsvp_sent === 1 ? `Green : `Red}
+                            />
+                          </td>
+                          <td className="whitespace-nowrap p-4">
+                            <Ui.Badge
+                              label={guest.invite_sent === 1 ? "Yes" : "No"}
+                              color={guest.invite_sent === 1 ? `Green : `Red}
+                            />
+                          </td>
+                          <td className="whitespace-nowrap p-4">
+                            <Ui.Badge
+                              label={
+                                guest.save_the_date_sent === 1 ? "Yes" : "No"
+                              }
+                              color={
+                                guest.save_the_date_sent === 1 ? `Green : `Red
+                              }
+                            />
+                          </td>
+                          <td
+                            className="whitespace-nowrap p-4 text-sm text-gray-500">
+                            <a
+                              href="#"
+                              className="text-blue-500 hover:text-blue-700">
+                              {React.string("Actions")}
+                            </a>
+                          </td>
+                        </tr>
+                      )
+                   |> Array.of_list
+                   |> React.array}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>

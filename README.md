@@ -30,5 +30,6 @@
   - [ ] add
   - [ ] edit
   - [ ] delete
+- [ ] sprite icon svgs
 - [ ] reasonML bindings for Radix Primitives
 - [ ] setup tailwindcss w/o cdn script
