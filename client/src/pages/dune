@@ -1,6 +1,6 @@
 (library
  (name pages)
  (modes melange)
- (libraries reason-react context components melange-fetch)
+ (libraries reason-react context components melange-fetch melange-radix)
  (preprocess
   (pps melange.ppx reason-react-ppx)))
