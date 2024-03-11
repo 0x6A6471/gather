@@ -48,6 +48,8 @@
   (reason (>= 3.10.0))
   (reason-react (>= 0.13.0))
   reason-react-ppx
+  melange-fetch
+  melange-json
 )
 ; Tags to categorize or label the package, useful for searches and indexing.
  (tags
