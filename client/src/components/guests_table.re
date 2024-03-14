@@ -1,5 +1,3 @@
-open Radix;
-
 type t = {
   id: int,
   name: string,
@@ -106,24 +104,7 @@ let make = () => {
 
   <>
     <button onClick={_ => addGuest()}> {React.string("Add guest?")} </button>
-    <Dialog.root>
-      <Dialog.trigger
-        className="rounded-md bg-gray-900 px-2.5 py-1.5 text-sm font-medium text-white shadow-sm hover:bg-gray-800 float-right">
-        {React.string("Add Guest")}
-      </Dialog.trigger>
-      <Dialog.portal>
-        <Dialog.overlay
-          className="fixed inset-0 z-50 bg-black/50 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0"
-        />
-        <Dialog.content
-          className="fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 bg-white p-6 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] rounded-lg md:w-full">
-          <p> {React.string("CONTENTTTTTTTTTTTTTTTTTT")} </p>
-          <Dialog.close className="absolute top-4 right-4 bg-red-500">
-            {React.string("Close")}
-          </Dialog.close>
-        </Dialog.content>
-      </Dialog.portal>
-    </Dialog.root>
+    <Guest_dialog />
     <div className="px-4">
       <div className="mt-4 flow-root">
         <div className="-mx-4 -my-2 overflow-x-auto">
