@@ -1,3 +1,5 @@
+open Radix;
+
 type t = {
   id: int,
   name: string,
@@ -29,7 +31,6 @@ module Decode = {
 
 [@react.component]
 let make = () => {
-  let (modalOpen, setModalOpen) = React.useState(_ => false);
   let (guests, setGuests) = React.useState(_ => []);
 
   let getGuests = () => {
@@ -62,18 +63,29 @@ let make = () => {
     None;
   });
 
-  <div>
-    <Ui.Modal open_=modalOpen setOpen_=setModalOpen />
-    <div className="px-4 sm:px-6 lg:px-8">
-      <div className="mt-8 flow-root">
-        <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-          <button
-            className="rounded-md bg-gray-900 px-2.5 py-1.5 text-sm font-medium text-white shadow-sm hover:bg-gray-800 float-right mr-8"
-            onClick={_ => setModalOpen(_ => !modalOpen)}>
-            {React.string("Add Guest")}
-          </button>
-          <div
-            className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+  <>
+    <Dialog.root>
+      <Dialog.trigger
+        className="rounded-md bg-gray-900 px-2.5 py-1.5 text-sm font-medium text-white shadow-sm hover:bg-gray-800 float-right">
+        {React.string("Add Guest")}
+      </Dialog.trigger>
+      <Dialog.portal>
+        <Dialog.overlay
+          className="fixed inset-0 z-50 bg-black/50 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0"
+        />
+        <Dialog.content
+          className="fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 bg-white p-6 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] rounded-lg md:w-full">
+          <p> {React.string("CONTENTTTTTTTTTTTTTTTTTT")} </p>
+          <Dialog.close className="absolute top-4 right-4 bg-red-500">
+            {React.string("Close")}
+          </Dialog.close>
+        </Dialog.content>
+      </Dialog.portal>
+    </Dialog.root>
+    <div className="px-4">
+      <div className="mt-4 flow-root">
+        <div className="-mx-4 -my-2 overflow-x-auto">
+          <div className="inline-block min-w-full py-2 align-middle">
             <div
               className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg">
               <table className="min-w-full divide-y divide-gray-300">
@@ -81,32 +93,32 @@ let make = () => {
                   <tr>
                     <th
                       scope="col"
-                      className="py-3.5 px-4 text-left text-sm font-medium text-gray-900">
+                      className="py-3.5 px-4 text-left text-sm font-medium text-gray-900 whitespace-nowrap">
                       {React.string("Name")}
                     </th>
                     <th
                       scope="col"
-                      className="py-3.5 px-4 text-left text-sm font-medium text-gray-900">
+                      className="py-3.5 px-4 text-left text-sm font-medium text-gray-900 whitespace-nowrap">
                       {React.string("Address")}
                     </th>
                     <th
                       scope="col"
-                      className="py-3.5 px-4 text-left text-sm font-medium text-gray-900">
+                      className="py-3.5 px-4 text-left text-sm font-medium text-gray-900 whitespace-nowrap">
                       {React.string("# of Guests")}
                     </th>
                     <th
                       scope="col"
-                      className="py-3.5 px-4 text-left text-sm font-medium text-gray-900">
+                      className="py-3.5 px-4 text-left text-sm font-medium text-gray-900 whitespace-nowrap">
                       {React.string("RSVP Sent")}
                     </th>
                     <th
                       scope="col"
-                      className="py-3.5 px-4 text-left text-sm font-medium text-gray-900">
+                      className="py-3.5 px-4 text-left text-sm font-medium text-gray-900 whitespace-nowrap">
                       {React.string("Invite Sent")}
                     </th>
                     <th
                       scope="col"
-                      className="py-3.5 px-4 text-left text-sm font-medium text-gray-900">
+                      className="py-3.5 px-4 text-left text-sm font-medium text-gray-900 whitespace-nowrap">
                       {React.string("STD Sent")}
                     </th>
                     <th scope="col" className="relative py-3.5 px-4">
@@ -179,5 +191,5 @@ let make = () => {
         </div>
       </div>
     </div>
-  </div>;
+  </>;
 };

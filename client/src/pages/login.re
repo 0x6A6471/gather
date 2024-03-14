@@ -34,9 +34,6 @@ let make = () => {
           />
         </div>
         <div className="mt-4">
-          <Radix.Label htmlFor="password" className="text-red-500">
-            {React.string("I'M WORKING I'M A LABEL!")}
-          </Radix.Label>
           <label
             htmlFor="password"
             value=email
