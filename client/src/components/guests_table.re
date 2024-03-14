@@ -63,7 +63,49 @@ let make = () => {
     None;
   });
 
+  let addGuest = () => {
+    let payload = Js.Dict.empty();
+    Js.Dict.set(payload, "name", Js.Json.string("Hiiiiiiiiiiii"));
+    Js.Dict.set(payload, "address", Js.Json.string("1234 Main St"));
+    Js.Dict.set(payload, "city", Js.Json.string("San Francisco"));
+    Js.Dict.set(payload, "state", Js.Json.string("CA"));
+    Js.Dict.set(payload, "zip", Js.Json.string("94123"));
+    Js.Dict.set(payload, "guest_amount", Js.Json.number(2.));
+    Js.Dict.set(payload, "rsvp_sent", Js.Json.number(0.));
+    Js.Dict.set(payload, "invite_sent", Js.Json.number(0.));
+    Js.Dict.set(payload, "save_the_date_sent", Js.Json.number(0.));
+
+    Js.Promise.(
+      Fetch.fetchWithInit(
+        "http://localhost:8080/guests",
+        Fetch.RequestInit.make(
+          ~method_=Post,
+          ~body=
+            Fetch.BodyInit.make(
+              Js.Json.stringify(Js.Json.object_(payload)),
+            ),
+          ~credentials=Include,
+          ~headers=
+            Fetch.HeadersInit.make({"Content-Type": "application/json"}),
+          (),
+        ),
+      )
+      |> then_(Fetch.Response.json)
+      |> then_(json => {
+           getGuests();
+           Js.log(json);
+           resolve();
+         })
+      |> catch(error => {
+           Js.log2("Error in addGuest:", error);
+           resolve();
+         })
+    )
+    |> ignore;
+  };
+
   <>
+    <button onClick={_ => addGuest()}> {React.string("Add guest?")} </button>
     <Dialog.root>
       <Dialog.trigger
         className="rounded-md bg-gray-900 px-2.5 py-1.5 text-sm font-medium text-white shadow-sm hover:bg-gray-800 float-right">
