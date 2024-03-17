@@ -21,6 +21,7 @@
 
 - [x] setup router
 - [x] login page
+  - [ ] show error state if auth fails
 - [x] auth context
   - [x] login
   - [x] validate w/ dream sql session
@@ -31,5 +32,7 @@
   - [ ] edit
   - [ ] delete
 - [ ] sprite icon svgs
-- [x] reasonML bindings for Radix Primitives
+- [ ] reasonML bindings for Radix Primitives
+  - [x] Dialog
+  - [ ] Toast
 - [ ] setup tailwindcss w/o cdn script
