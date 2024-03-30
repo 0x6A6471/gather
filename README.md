@@ -12,7 +12,7 @@
   - [x] logout
 - [x] guest routes
   - [x] get
-  - [ ] post
+  - [x] post
   - [ ] put
   - [ ] delete
 - [x] separate routes, cleanup & find a structure
