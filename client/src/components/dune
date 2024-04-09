@@ -1,6 +1,0 @@
-(library
- (name components)
- (modes melange)
- (libraries reason-react melange-fetch melange-radix melange-json ui)
- (preprocess
-  (pps melange.ppx reason-react-ppx)))

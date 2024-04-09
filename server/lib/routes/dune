@@ -1,5 +1,0 @@
-(library
- (name routes)
- (libraries caqti caqti-lwt dream ppx_rapper_lwt)
- (preprocess
-  (pps ppx_yojson_conv ppx_rapper)))

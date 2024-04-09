@@ -1,38 +1,18 @@
-## TODO
+# Gather
 
-### Server
+To start your Phoenix server:
 
-- [x] setup dream server
-  - [x] setup sessions/cookies
-  - [ ] origin referrer check
-- [x] setup sqlite db
-- [x] auth routes
-  - [x] login
-  - [x] validate
-  - [x] logout
-- [x] guest routes
-  - [x] get
-  - [x] post
-  - [ ] put
-  - [ ] delete
-- [x] separate routes, cleanup & find a structure
+  * Run `mix setup` to install and setup dependencies
+  * Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`
 
-### Client
+Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
-- [x] setup router
-- [x] login page
-  - [ ] show error state if auth fails
-- [x] auth context
-  - [x] login
-  - [x] validate w/ dream sql session
-  - [x] logout
-- [ ] home page
-  - [x] table to display list of guests
-  - [ ] add
-  - [ ] edit
-  - [ ] delete
-- [ ] sprite icon svgs
-- [ ] reasonML bindings for Radix Primitives
-  - [x] Dialog
-  - [ ] Toast
-- [ ] setup tailwindcss w/o cdn script
+Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
+
+## Learn more
+
+  * Official website: https://www.phoenixframework.org/
+  * Guides: https://hexdocs.pm/phoenix/overview.html
+  * Docs: https://hexdocs.pm/phoenix
+  * Forum: https://elixirforum.com/c/phoenix-forum
+  * Source: https://github.com/phoenixframework/phoenix
