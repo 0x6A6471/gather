@@ -1,5 +1,7 @@
 # Gather
 
-### TODO: Migrate from OCaml
+### TODO
+
+Migrate from [ocaml](https://github.com/jakequinter/gather/tree/ocaml)
 
 - [ ] setup db
