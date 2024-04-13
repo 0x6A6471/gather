@@ -12,6 +12,47 @@
     </script>
   </head>
   <body class="bg-gray-950 antialiased text-gray-400">
+    <ul class="relative z-10 flex items-center gap-4 px-4 sm:px-6 lg:px-8 justify-end">
+      <%= if @current_user do %>
+        <li class="text-sm leading-6 text-gray-100">
+          <%= @current_user.email %>
+        </li>
+        <li>
+          <.link
+            href={~p"/users/settings"}
+            class="text-sm leading-6 text-gray-100 font-medium hover:text-gray-200"
+          >
+            Settings
+          </.link>
+        </li>
+        <li>
+          <.link
+            href={~p"/users/log_out"}
+            method="delete"
+            class="text-sm leading-6 text-gray-100 font-medium hover:text-gray-200"
+          >
+            Log out
+          </.link>
+        </li>
+      <% else %>
+        <li>
+          <.link
+            href={~p"/register"}
+            class="text-sm leading-6 text-gray-100 font-medium hover:text-gray-200"
+          >
+            Register
+          </.link>
+        </li>
+        <li>
+          <.link
+            href={~p"/login"}
+            class="text-sm leading-6 text-gray-100 font-medium hover:text-gray-200"
+          >
+            Log in
+          </.link>
+        </li>
+      <% end %>
+    </ul>
     <%= @inner_content %>
   </body>
 </html>
