@@ -9,16 +9,16 @@ defmodule Gather.Guests do
   alias Gather.Guests.Guest
 
   @doc """
-  Returns the list of guests.
+  Returns the list of guests associated to a user.
 
   ## Examples
 
-      iex> list_guests()
+      iex> list_guests(1)
       [%Guest{}, ...]
 
   """
-  def list_guests do
-    Repo.all(Guest)
+  def list_guests(user_id) do
+    Repo.all(from g in Guest, where: g.user_id == ^user_id)
   end
 
   @doc """
@@ -42,10 +42,10 @@ defmodule Gather.Guests do
 
   ## Examples
 
-      iex> create_guest(%{field: value})
+      iex> create_guest(user, %{field: value})
       {:ok, %Guest{}}
 
-      iex> create_guest(%{field: bad_value})
+      iex> create_guest(user, %{field: bad_value})
       {:error, %Ecto.Changeset{}}
 
   """

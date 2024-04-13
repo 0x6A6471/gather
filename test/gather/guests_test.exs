@@ -21,9 +21,10 @@ defmodule Gather.GuestsTest do
       save_the_date_sent: nil
     }
 
-    test "list_guests/0 returns all guests" do
+    test "list_guests/0 returns all guests associated to the user" do
       guest = guest_fixture()
-      assert Guests.list_guests() == [guest]
+      dbg(guest)
+      assert Guests.list_guests(1) == [guest]
     end
 
     test "get_guest!/1 returns the guest with given id" do

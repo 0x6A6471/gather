@@ -34,4 +34,3 @@ defmodule Gather.GuestsFixtures do
     guest
   end
 end
-
