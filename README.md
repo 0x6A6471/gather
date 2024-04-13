@@ -5,7 +5,7 @@
 Migrate from [ocaml](https://github.com/jakequinter/gather/tree/ocaml)
 
 - [ ] setup db
-  - [ ] users
+  - [x] users
   - [ ] guests
 - [ ] setup auth
   - [x] users/register -> register
