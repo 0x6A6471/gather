@@ -19,4 +19,4 @@ Migrate from [ocaml](https://github.com/jakequinter/gather/tree/ocaml)
   - [ ] users/confirm -> confim
 - [ ] tests
   - [x] users
-  - [ ] guests
+  - [x] guests
