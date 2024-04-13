@@ -201,7 +201,7 @@ defmodule GatherWeb.CoreComponents do
   def simple_form(assigns) do
     ~H"""
     <.form :let={f} for={@for} as={@as} {@rest}>
-      <div class="mt-10 space-y-8 bg-white">
+      <div class="space-y-8 bg-inherit">
         <%= render_slot(@inner_block, f) %>
         <div :for={action <- @actions} class="mt-2 flex items-center justify-between gap-6">
           <%= render_slot(action, f) %>
@@ -230,8 +230,8 @@ defmodule GatherWeb.CoreComponents do
     <button
       type={@type}
       class={[
-        "phx-submit-loading:opacity-75 rounded-lg bg-gray-100 hover:bg-gray-200 py-2 px-3",
-        "text-sm font-semibold leading-6 text-white active:text-white/80",
+        "phx-submit-loading:opacity-75 rounded-md bg-gray-100 hover:bg-gray-200 py-2 px-3",
+        "text-sm font-semibold leading-6 text-gray-950 active:text-gray-950/80",
         @class
       ]}
       {@rest}
@@ -376,7 +376,7 @@ defmodule GatherWeb.CoreComponents do
         id={@id}
         value={Phoenix.HTML.Form.normalize_value(@type, @value)}
         class={[
-          "mt-2 block w-full rounded-lg text-gray-100 focus:ring-0 sm:text-sm sm:leading-6",
+          "mt-0.5 block bg-transparent text-gray-50 w-full rounded-md border-0 py-2 ring-1 ring-inset ring-gray-700 hover:ring-inset hover:ring-gray-500 focus:ring-inset focus:ring-gray-500",
           "phx-no-feedback:border-gray-300 phx-no-feedback:focus:border-gray-400",
           @errors == [] && "border-gray-300 focus:border-gray-400",
           @errors != [] && "border-rose-400 focus:border-rose-400"
