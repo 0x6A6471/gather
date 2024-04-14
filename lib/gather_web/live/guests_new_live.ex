@@ -2,6 +2,7 @@ defmodule GatherWeb.GuestsNewLive do
   use GatherWeb, :live_view
 
   alias Gather.Accounts
+  alias Gather.Guests.Guest
 
   def render(assigns) do
     ~H"""
@@ -19,7 +20,14 @@ defmodule GatherWeb.GuestsNewLive do
 
         <div class="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-6">
           <div class="sm:col-span-3">
-            <.input field={@form[:name]} type="text" label="Name" required autofocus />
+            <.input
+              field={@form[:name]}
+              type="text"
+              label="Name"
+              placeholder="Jane & John Doe"
+              required
+              autofocus
+            />
           </div>
           <div class="sm:col-span-3">
             <.input
@@ -34,19 +42,33 @@ defmodule GatherWeb.GuestsNewLive do
           </div>
 
           <div class="sm:col-span-4">
-            <.input field={@form[:address]} type="text" label="Street address" required />
+            <.input
+              field={@form[:address]}
+              type="text"
+              label="Street address"
+              placeholder="123 Main St."
+              required
+            />
           </div>
 
           <div class="sm:col-span-2 sm:col-start-1">
-            <.input field={@form[:city]} type="text" label="City" required />
+            <.input field={@form[:city]} type="text" label="City" placeholder="Boston" required />
+          </div>
+          <!-- TODO: make this a select -->
+          <div class="sm:col-span-2">
+            <.input field={@form[:state]} type="text" label="State" placeholder="MA" required />
           </div>
 
           <div class="sm:col-span-2">
-            <.input field={@form[:state]} type="text" label="State" required />
-          </div>
-
-          <div class="sm:col-span-2">
-            <.input field={@form[:zip]} type="text" label="Postal code" required />
+            <.input
+              field={@form[:zip]}
+              type="text"
+              label="Postal code"
+              minlength="5"
+              maxlength="5"
+              placeholder="12345"
+              required
+            />
           </div>
         </div>
 
@@ -65,7 +87,9 @@ defmodule GatherWeb.GuestsNewLive do
         </fieldset>
 
         <div class="mt-6 flex items-center justify-end gap-x-6">
-          <a href="/guests" class="text-sm font-medium leading-6 text-gray-100">Cancel</a>
+          <a href="/guests" class="text-sm font-medium leading-6 text-gray-100 hover:text-gray-300">
+            Cancel
+          </a>
           <button
             type="submit"
             class="block rounded-md bg-gather-500 px-3 py-2 text-center text-sm font-medium text-white hover:bg-gather-600"
@@ -79,12 +103,12 @@ defmodule GatherWeb.GuestsNewLive do
   end
 
   def mount(_params, session, socket) do
-    email = live_flash(socket.assigns.flash, :email)
-    form = to_form(%{"email" => email}, as: "guest")
+    form = to_form(%{Guest => %{}}, as: "guest")
+
     token = session["user_token"]
     user = Accounts.get_user_by_session_token(token)
     user_id = user.id
 
-    {:ok, assign(socket, form: form, user_id: user_id), temporary_assigns: [form: form]}
+    {:ok, assign(socket, form: form, user_id: user_id)}
   end
 end
