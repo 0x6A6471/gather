@@ -99,7 +99,7 @@ defmodule Gather.GuestsTest do
 
     test "delete_guest/1 deletes the guest" do
       guest = guest_fixture()
-      assert {:ok, %Guest{}} = Guests.delete_guest(guest)
+      assert {:ok, %Guest{}} = Guests.delete_guest(guest.id)
       assert_raise Ecto.NoResultsError, fn -> Guests.get_guest!(guest.id) end
     end
 
