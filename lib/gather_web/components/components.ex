@@ -8,7 +8,7 @@ defmodule GatherWeb.Components do
 
   ## Examples
 
-      <.modal guest_id="1" />
+      <.modal guest_id="1" guest_name="Jane Doe" />
 
   """
 
