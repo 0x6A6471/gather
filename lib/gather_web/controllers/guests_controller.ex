@@ -22,10 +22,9 @@ defmodule GatherWeb.GuestsController do
           |> put_flash(:info, "#{guest.name} added successfully.")
           |> redirect(to: "/guests")
 
-        {:error, changeset} ->
+        {:error, _changeset} ->
           conn
           |> put_flash(:error, "Failed to create guest.")
-          |> render("new.html", changeset: changeset)
       end
     else
       conn
