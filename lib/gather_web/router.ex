@@ -68,6 +68,7 @@ defmodule GatherWeb.Router do
       on_mount: [{GatherWeb.UserAuth, :ensure_authenticated}] do
       live "/guests", GuestsLive, :new
       live "/guests/new", GuestsNewLive, :new
+      live "/guests/:id", GuestsEditLive, :edit
 
       live "/users/settings", UserSettingsLive, :edit
       live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email

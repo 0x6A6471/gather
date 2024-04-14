@@ -1,7 +1,6 @@
 defmodule GatherWeb.GuestsLive do
   use GatherWeb, :live_view
 
-  alias Gather.Accounts
   alias Gather.Guests
   alias GatherWeb.Components
 
@@ -90,9 +89,16 @@ defmodule GatherWeb.GuestsLive do
                 <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium">
                   <Components.delete_guest_modal guest_id={guest.id} guest_name={guest.name} />
 
+                  <a
+                    href={"/guests/#{guest.id}"}
+                    class="p-1.5 rounded text-blue-700 hover:text-blue-900 hover:bg-gray-900/80 inline-flex items-center justify-center"
+                  >
+                    <.icon name="hero-pencil-square" class="h-4 w-4" />
+                  </a>
+
                   <button
                     phx-click={show_modal("delete_guest_modal")}
-                    class="text-rose-600 hover:text-rose-900"
+                    class="p-1.5 rounded text-rose-700 hover:text-rose-900 hover:bg-gray-900/80 inline-flex items-center justify-center"
                   >
                     <.icon name="hero-trash" class="h-4 w-4" />
                   </button>
@@ -106,12 +112,11 @@ defmodule GatherWeb.GuestsLive do
     """
   end
 
-  def mount(_params, session, socket) do
-    token = session["user_token"]
-    user = Accounts.get_user_by_session_token(token)
+  def mount(_params, _session, socket) do
+    user_id = socket.assigns.current_user.id
 
     socket =
-      assign(socket, guests: Guests.list_guests(user.id))
+      assign(socket, guests: Guests.list_guests(user_id))
 
     {:ok, socket}
   end
@@ -123,7 +128,7 @@ defmodule GatherWeb.GuestsLive do
           Enum.filter(socket.assigns.guests, fn guest -> guest.id != String.to_integer(id) end)
 
         socket = assign(socket, :guests, updated_guests)
-        socket = put_flash(socket, :info, "#{guest.name} has been deleted")
+        socket = put_flash(socket, :success, "#{guest.name} has been deleted")
         {:noreply, socket}
 
       {:error, _message} ->

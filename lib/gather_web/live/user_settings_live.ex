@@ -77,7 +77,7 @@ defmodule GatherWeb.UserSettingsLive do
     socket =
       case Accounts.update_user_email(socket.assigns.current_user, token) do
         :ok ->
-          put_flash(socket, :info, "Email changed successfully.")
+          put_flash(socket, :success, "Email changed successfully.")
 
         :error ->
           put_flash(socket, :error, "Email change link is invalid or it has expired.")
@@ -128,7 +128,9 @@ defmodule GatherWeb.UserSettingsLive do
         )
 
         info = "A link to confirm your email change has been sent to the new address."
-        {:noreply, socket |> put_flash(:info, info) |> assign(email_form_current_password: nil)}
+
+        {:noreply,
+         socket |> put_flash(:success, info) |> assign(email_form_current_password: nil)}
 
       {:error, changeset} ->
         {:noreply, assign(socket, :email_form, to_form(Map.put(changeset, :action, :insert)))}

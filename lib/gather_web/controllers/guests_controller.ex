@@ -17,7 +17,7 @@ defmodule GatherWeb.GuestsController do
       case Guests.create_guest(user, guest_params) do
         {:ok, guest} ->
           conn
-          |> put_flash(:info, "#{guest.name} added successfully.")
+          |> put_flash(:success, "#{guest.name} added successfully.")
           |> redirect(to: "/guests")
 
         {:error, _changeset} ->
