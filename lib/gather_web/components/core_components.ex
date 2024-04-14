@@ -333,7 +333,7 @@ defmodule GatherWeb.CoreComponents do
       <select
         id={@id}
         name={@name}
-        class="mt-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-gray-400 focus:ring-0 sm:text-sm"
+        class="mt-0.5 block bg-transparent text-gray-50 w-full rounded-md border-0 py-2 ring-1 ring-inset ring-gray-700 hover:ring-inset hover:ring-gray-600 focus:ring-inset focus:ring-gray-600"
         multiple={@multiple}
         {@rest}
       >

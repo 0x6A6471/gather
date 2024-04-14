@@ -54,9 +54,16 @@ defmodule GatherWeb.GuestsNewLive do
           <div class="sm:col-span-2 sm:col-start-1">
             <.input field={@form[:city]} type="text" label="City" placeholder="Boston" required />
           </div>
-          <!-- TODO: make this a select -->
+
           <div class="sm:col-span-2">
-            <.input field={@form[:state]} type="text" label="State" placeholder="MA" required />
+            <.input
+              field={@form[:state]}
+              type="select"
+              label="State"
+              placeholder="MA"
+              required
+              options={@states}
+            />
           </div>
 
           <div class="sm:col-span-2">
@@ -106,7 +113,12 @@ defmodule GatherWeb.GuestsNewLive do
     user = Accounts.get_user_by_session_token(token)
     user_id = user.id
 
-    {:ok, assign(socket, form: to_form(changeset), user_id: user_id)}
+    {:ok,
+     assign(socket,
+       states: Guests.list_states(),
+       form: to_form(changeset),
+       user_id: user_id
+     )}
   end
 
   def handle_event("validate", %{"guest" => guest_params}, socket) do
