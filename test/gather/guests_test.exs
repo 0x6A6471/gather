@@ -23,7 +23,6 @@ defmodule Gather.GuestsTest do
 
     test "list_guests/0 returns all guests associated to the user" do
       guest = guest_fixture()
-      dbg(guest)
       assert Guests.list_guests(1) == [guest]
     end
 
