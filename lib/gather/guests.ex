@@ -79,14 +79,16 @@ defmodule Gather.Guests do
 
   ## Examples
 
-      iex> delete_guest(guest)
+      iex> delete_guest(1)
       {:ok, %Guest{}}
 
-      iex> delete_guest(guest)
+      iex> delete_guest(1)
       {:error, %Ecto.Changeset{}}
 
   """
-  def delete_guest(%Guest{} = guest) do
+  def delete_guest(guest_id) do
+    guest = Repo.get!(Guest, guest_id)
+
     Repo.delete(guest)
   end
 

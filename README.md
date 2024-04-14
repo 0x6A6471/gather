@@ -27,7 +27,7 @@ Migrate from [ocaml](https://github.com/jakequinter/gather/tree/ocaml)
   - [x] GET (`/guests`)
   - [x] POST (`/guests`) -> `create_guest`
   - [ ] PUT (`/guests`) -> `update_guest`
-  - [ ] DELETE (`/guests`) -> `delete_guest`
+  - [x] DELETE (`/guests`) -> `delete_guest`
 - [ ] search
 
 ### Tests

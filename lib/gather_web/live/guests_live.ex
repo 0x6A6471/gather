@@ -3,6 +3,7 @@ defmodule GatherWeb.GuestsLive do
 
   alias Gather.Accounts
   alias Gather.Guests
+  alias GatherWeb.Components
 
   def render(assigns) do
     ~H"""
@@ -59,6 +60,9 @@ defmodule GatherWeb.GuestsLive do
                 >
                   Invite
                 </th>
+                <th scope="col" class="relative py-3.5 pl-3 pr-4">
+                  <span class="sr-only">Edit</span>
+                </th>
               </tr>
             </thead>
             <tbody class="divide-y divide-gather-900 bg-gray-800/80">
@@ -83,6 +87,16 @@ defmodule GatherWeb.GuestsLive do
                 <td class="whitespace-nowrap px-3 py-4 text-sm">
                   <%= guest.invite_sent %>
                 </td>
+                <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium">
+                  <Components.delete_guest_modal guest_id={guest.id} guest_name={guest.name} />
+
+                  <button
+                    phx-click={show_modal("delete_guest_modal")}
+                    class="text-rose-600 hover:text-rose-900"
+                  >
+                    <.icon name="hero-trash" class="h-4 w-4" />
+                  </button>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -97,10 +111,24 @@ defmodule GatherWeb.GuestsLive do
     user = Accounts.get_user_by_session_token(token)
 
     socket =
-      assign(socket,
-        guests: Guests.list_guests(user.id)
-      )
+      assign(socket, guests: Guests.list_guests(user.id))
 
     {:ok, socket}
+  end
+
+  def handle_event("delete", %{"id" => id}, socket) do
+    case Guests.delete_guest(id) do
+      {:ok, guest} ->
+        updated_guests =
+          Enum.filter(socket.assigns.guests, fn guest -> guest.id != String.to_integer(id) end)
+
+        socket = assign(socket, :guests, updated_guests)
+        socket = put_flash(socket, :info, "#{guest.name} has been deleted")
+        {:noreply, socket}
+
+      {:error, _message} ->
+        socket = put_flash(socket, :error, "Failed to delete guest")
+        {:noreply, socket}
+    end
   end
 end
