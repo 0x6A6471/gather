@@ -36,7 +36,7 @@ defmodule Gather.GuestsTest do
       valid_attrs = %{
         name: "some name",
         state: "some state",
-        zip: "some zip",
+        zip: "12345",
         address: "some address",
         city: "some city",
         guest_amount: 42,
@@ -50,7 +50,7 @@ defmodule Gather.GuestsTest do
       assert {:ok, %Guest{} = guest} = Guests.create_guest(user, valid_attrs)
       assert guest.name == "some name"
       assert guest.state == "some state"
-      assert guest.zip == "some zip"
+      assert guest.zip == "12345"
       assert guest.address == "some address"
       assert guest.city == "some city"
       assert guest.guest_amount == 42
@@ -71,7 +71,7 @@ defmodule Gather.GuestsTest do
       update_attrs = %{
         name: "some updated name",
         state: "some updated state",
-        zip: "some updated zip",
+        zip: "00000",
         address: "some updated address",
         city: "some updated city",
         guest_amount: 43,
@@ -83,7 +83,7 @@ defmodule Gather.GuestsTest do
       assert {:ok, %Guest{} = guest} = Guests.update_guest(guest, update_attrs)
       assert guest.name == "some updated name"
       assert guest.state == "some updated state"
-      assert guest.zip == "some updated zip"
+      assert guest.zip == "00000"
       assert guest.address == "some updated address"
       assert guest.city == "some updated city"
       assert guest.guest_amount == 43

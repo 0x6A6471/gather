@@ -44,5 +44,7 @@ defmodule Gather.Guests.Guest do
       :save_the_date_sent,
       :user_id
     ])
+    |> validate_number(:guest_amount, greater_than_or_equal_to: 1)
+    |> validate_length(:zip, is: 5)
   end
 end

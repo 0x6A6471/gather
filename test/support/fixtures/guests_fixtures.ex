@@ -17,11 +17,11 @@ defmodule Gather.GuestsFixtures do
     # Prepare attributes for the guest
     guest_attrs =
       %{
-        name: "some name",
-        address: "some address",
-        city: "some city",
-        state: "some state",
-        zip: "some zip",
+        name: "Jane Doe",
+        address: "123 Main St.",
+        city: "Boston",
+        state: "MA",
+        zip: "02111",
         guest_amount: 2,
         invite_sent: false,
         rsvp_sent: false,

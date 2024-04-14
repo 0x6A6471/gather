@@ -230,8 +230,8 @@ defmodule GatherWeb.CoreComponents do
     <button
       type={@type}
       class={[
-        "phx-submit-loading:opacity-75 rounded-md bg-gray-100 hover:bg-gray-200 py-2 px-3",
-        "text-sm font-semibold leading-6 text-gray-950 active:text-gray-950/80",
+        "phx-submit-loading:opacity-75 rounded-md bg-gather-500 h-100 hover:bg-gather-600 py-2 px-3",
+        "text-sm font-medium leading-6 text-white active:text-gray-200",
         @class
       ]}
       {@rest}

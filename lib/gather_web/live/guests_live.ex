@@ -20,8 +20,8 @@ defmodule GatherWeb.GuestsLive do
       </div>
       <div class="mt-8 flow-root">
         <div class="overflow-x-auto rounded-lg shadow ring-1 ring-black ring-opacity-5">
-          <table class="min-w-full bg-gray-900 rounded-lg">
-            <thead class="bg-gray-900">
+          <table class="min-w-full bg-gray-900 rounded-lg divide-y divide-gather-900">
+            <thead class="bg-gray-900/80">
               <tr>
                 <th
                   scope="col"
@@ -61,7 +61,7 @@ defmodule GatherWeb.GuestsLive do
                 </th>
               </tr>
             </thead>
-            <tbody class="divide-y divide-gray-200 bg-gray-800">
+            <tbody class="divide-y divide-gather-900 bg-gray-800/80">
               <tr :for={guest <- @guests}>
                 <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-100 sm:pl-6">
                   <%= guest.name %>

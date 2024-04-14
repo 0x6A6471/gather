@@ -2,17 +2,17 @@ defmodule GatherWeb.GuestsNewLive do
   use GatherWeb, :live_view
 
   alias Gather.Accounts
+  alias Gather.Guests
   alias Gather.Guests.Guest
 
   def render(assigns) do
     ~H"""
     <div class="max-w-screen-md mx-auto bg-gray-900/80 rounded-lg p-8">
-      <!-- figure out the action here-->
-      <.simple_form
+      <.form
         for={@form}
         id="guest_form"
         action={~p"/guests?_action=guest_created"}
-        phx-update="ignore"
+        phx-change="validate"
       >
         <h1 class="text-3xl font-bold leading-7 text-center text-gray-100">Add Guest</h1>
 
@@ -63,11 +63,11 @@ defmodule GatherWeb.GuestsNewLive do
             <.input
               field={@form[:zip]}
               type="text"
-              label="Postal code"
-              minlength="5"
               maxlength="5"
-              placeholder="12345"
+              label="Postal code"
+              placeholder="02111"
               required
+              phx-debounce="blur"
             />
           </div>
         </div>
@@ -81,7 +81,7 @@ defmodule GatherWeb.GuestsNewLive do
               <.input field={@form[:rsvp_sent]} type="checkbox" label="RSVP Sent" />
             </div>
             <div class="relative flex gap-x-3">
-              <.input field={@form[:rsvp_sent]} type="checkbox" label="Invite Sent" />
+              <.input field={@form[:invite_sent]} type="checkbox" label="Invite Sent" />
             </div>
           </div>
         </fieldset>
@@ -90,25 +90,31 @@ defmodule GatherWeb.GuestsNewLive do
           <a href="/guests" class="text-sm font-medium leading-6 text-gray-100 hover:text-gray-300">
             Cancel
           </a>
-          <button
-            type="submit"
-            class="block rounded-md bg-gather-500 px-3 py-2 text-center text-sm font-medium text-white hover:bg-gather-600"
-          >
+          <.button type="submit" phx-disable-with="Saving...">
             Save
-          </button>
+          </.button>
         </div>
-      </.simple_form>
+      </.form>
     </div>
     """
   end
 
   def mount(_params, session, socket) do
-    form = to_form(%{Guest => %{}}, as: "guest")
+    changeset = Guests.change_guest(%Guest{})
 
     token = session["user_token"]
     user = Accounts.get_user_by_session_token(token)
     user_id = user.id
 
-    {:ok, assign(socket, form: form, user_id: user_id)}
+    {:ok, assign(socket, form: to_form(changeset), user_id: user_id)}
+  end
+
+  def handle_event("validate", %{"guest" => guest_params}, socket) do
+    changeset =
+      %Guest{}
+      |> Guests.change_guest(guest_params)
+      |> Map.put(:action, :validate)
+
+    {:noreply, assign(socket, form: to_form(changeset))}
   end
 end
