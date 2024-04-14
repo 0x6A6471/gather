@@ -308,7 +308,7 @@ defmodule GatherWeb.CoreComponents do
 
     ~H"""
     <div phx-feedback-for={@name}>
-      <label class="flex items-center gap-4 text-sm leading-6 text-gray-600">
+      <label class="flex items-center gap-4 font-medium text-gray-100 text-sm">
         <input type="hidden" name={@name} value="false" />
         <input
           type="checkbox"
@@ -316,7 +316,7 @@ defmodule GatherWeb.CoreComponents do
           name={@name}
           value="true"
           checked={@checked}
-          class="rounded border-gray-300 text-gray-900 focus:ring-0"
+          class="h-4 w-4 rounded border-gray-700 text-gather-500 focus:ring-2 focus:ring-gather-200 focus:ring-offset-0"
           {@rest}
         />
         <%= @label %>
@@ -376,7 +376,7 @@ defmodule GatherWeb.CoreComponents do
         id={@id}
         value={Phoenix.HTML.Form.normalize_value(@type, @value)}
         class={[
-          "mt-0.5 block bg-transparent text-gray-50 w-full rounded-md border-0 py-2 ring-1 ring-inset ring-gray-700 hover:ring-inset hover:ring-gray-500 focus:ring-inset focus:ring-gray-500",
+          "mt-0.5 block bg-transparent text-gray-50 w-full rounded-md border-0 py-2 ring-1 ring-inset ring-gray-700 hover:ring-inset hover:ring-gray-600 focus:ring-inset focus:ring-gray-600",
           "phx-no-feedback:border-gray-300 phx-no-feedback:focus:border-gray-400",
           @errors == [] && "border-gray-300 focus:border-gray-400",
           @errors != [] && "border-rose-400 focus:border-rose-400"

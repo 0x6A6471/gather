@@ -10,7 +10,7 @@ defmodule GatherWeb.UserLoginLive do
       </h2>
 
       <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
-        <div class="bg-gray-900 px-6 py-12 sm:rounded-lg sm:px-12">
+        <div class="bg-gray-900/80 px-6 py-12 rounded-lg sm:px-12">
           <.simple_form for={@form} id="login_form" action={~p"/login"} phx-update="ignore">
             <.input field={@form[:email]} type="email" label="Email" required autofocus />
             <.input field={@form[:password]} type="password" label="Password" required />
