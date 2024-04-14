@@ -102,4 +102,67 @@ defmodule Gather.Guests do
   def change_guest(%Guest{} = guest, attrs \\ %{}) do
     Guest.changeset(guest, attrs)
   end
+
+  @doc """
+  Returns a list of states.
+
+  ## Examples
+
+      iex> states()
+      ["AL", "AK", ...]
+  """
+  def list_states do
+    [
+      "AL",
+      "AK",
+      "AZ",
+      "AR",
+      "CA",
+      "CO",
+      "CT",
+      "DE",
+      "FL",
+      "GA",
+      "HI",
+      "ID",
+      "IL",
+      "IN",
+      "IA",
+      "KS",
+      "KY",
+      "LA",
+      "ME",
+      "MD",
+      "MA",
+      "MI",
+      "MN",
+      "MS",
+      "MO",
+      "MT",
+      "NE",
+      "NV",
+      "NH",
+      "NJ",
+      "NM",
+      "NY",
+      "NC",
+      "ND",
+      "OH",
+      "OK",
+      "OR",
+      "PA",
+      "RI",
+      "SC",
+      "SD",
+      "TN",
+      "TX",
+      "UT",
+      "VT",
+      "VA",
+      "WA",
+      "WV",
+      "WI",
+      "WY"
+    ]
+  end
 end

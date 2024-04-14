@@ -1,10 +1,12 @@
 # Gather
 
-### TODO
+## TODO
 
 Migrate from [ocaml](https://github.com/jakequinter/gather/tree/ocaml)
 
-- [ ] setup db
+### Server
+
+- [x] setup db
   - [x] users
   - [x] guests
 - [ ] setup auth
@@ -17,6 +19,18 @@ Migrate from [ocaml](https://github.com/jakequinter/gather/tree/ocaml)
   - [ ] users/log_out -> log_out
   - [ ] users/confrim/:token -> confirm/:token
   - [ ] users/confirm -> confim
-- [ ] tests
-  - [x] users
-  - [x] guests
+
+### Client
+
+- [x] auth routes
+- [ ] guest routes
+  - [x] GET (`/guests`)
+  - [x] POST (`/guests`) -> `create_guest`
+  - [ ] PUT (`/guests`) -> `update_guest`
+  - [ ] DELETE (`/guests`) -> `delete_guest`
+- [ ] search
+
+### Tests
+
+- [x] users
+- [x] guests

@@ -72,6 +72,8 @@ defmodule GatherWeb.Router do
       live "/users/settings", UserSettingsLive, :edit
       live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
     end
+
+    post "/guests", GuestsController, :create
   end
 
   scope "/", GatherWeb do
