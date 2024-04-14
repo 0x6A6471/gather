@@ -3,6 +3,7 @@ defmodule GatherWeb.GuestsLive do
 
   alias Gather.Accounts
   alias Gather.Guests
+  alias GatherWeb.Components
 
   def render(assigns) do
     ~H"""
@@ -87,12 +88,13 @@ defmodule GatherWeb.GuestsLive do
                   <%= guest.invite_sent %>
                 </td>
                 <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium">
+                  <Components.delete_guest_modal guest_id={guest.id} guest_name={guest.name} />
+
                   <button
-                    phx-click="delete"
-                    phx-value-id={guest.id}
+                    phx-click={show_modal("delete_guest_modal")}
                     class="text-rose-600 hover:text-rose-900"
                   >
-                    Delete
+                    <.icon name="hero-trash" class="h-4 w-4" />
                   </button>
                 </td>
               </tr>
@@ -109,9 +111,7 @@ defmodule GatherWeb.GuestsLive do
     user = Accounts.get_user_by_session_token(token)
 
     socket =
-      assign(socket,
-        guests: Guests.list_guests(user.id)
-      )
+      assign(socket, guests: Guests.list_guests(user.id))
 
     {:ok, socket}
   end
