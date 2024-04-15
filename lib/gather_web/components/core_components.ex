@@ -12,7 +12,7 @@ defmodule GatherWeb.CoreComponents do
   See the [Tailwind CSS documentation](https://tailwindcss.com) to learn
   how to customize them or feel free to swap in another framework altogether.
 
-  Icons are provided by [heroicons](https://heroicons.com). See `icon/1` for usage.
+  Icons are provided by sprite.svg. See `priv/static/sprite.svg` for usage.
   """
   use Phoenix.Component
 
@@ -75,7 +75,7 @@ defmodule GatherWeb.CoreComponents do
                   class="-m-3 flex-none p-3 opacity-20 hover:opacity-40"
                   aria-label={gettext("close")}
                 >
-                  <.icon name="hero-x-mark-solid" class="h-5 w-5" />
+                  <.icon name="close" size={20} />
                 </button>
               </div>
               <div id={"#{@id}-content"}>
@@ -123,14 +123,14 @@ defmodule GatherWeb.CoreComponents do
       {@rest}
     >
       <p :if={@title} class="flex items-center gap-1.5 text-sm font-semibold leading-6">
-        <.icon :if={@kind == :error} name="hero-exclamation-circle-mini" class="h-4 w-4" />
-        <.icon :if={@kind == :info} name="hero-information-circle-mini" class="h-4 w-4" />
-        <.icon :if={@kind == :success} name="hero-check-circle-mini" class="h-4 w-4" />
+        <.icon :if={@kind == :error} name="alert-circle" class="h-4 w-4" />
+        <.icon :if={@kind == :info} name="info" />
+        <.icon :if={@kind == :success} name="bell-check" class="h-4 w-4" />
         <%= @title %>
       </p>
       <p class="mt-2 text-sm leading-5"><%= msg %></p>
       <button type="button" class="group absolute top-1 right-1 p-2" aria-label={gettext("close")}>
-        <.icon name="hero-x-mark-solid" class="h-5 w-5 opacity-40 group-hover:opacity-70" />
+        <.icon name="close" size={20} class="opacity-40 group-hover:opacity-70" />
       </button>
     </div>
     """
@@ -412,8 +412,8 @@ defmodule GatherWeb.CoreComponents do
 
   def error(assigns) do
     ~H"""
-    <p class="mt-3 flex gap-3 text-sm leading-6 text-rose-600 phx-no-feedback:hidden">
-      <.icon name="hero-exclamation-circle-mini" class="mt-0.5 h-5 w-5 flex-none" />
+    <p class="mt-1 flex gap-2 text-sm leading-6 text-rose-600 phx-no-feedback:hidden">
+      <.icon name="alert-circle" class="mt-1 flex-none" />
       <%= render_slot(@inner_block) %>
     </p>
     """
@@ -574,22 +574,14 @@ defmodule GatherWeb.CoreComponents do
   end
 
   @doc """
-  Renders a [Heroicon](https://heroicons.com).
+  Renders an icon from `priv/static/sprite.svg`.
 
-  Heroicons come in three styles – outline, solid, and mini.
-  By default, the outline style is used, but solid and mini may
-  be applied by using the `-solid` and `-mini` suffix.
-
-  You can customize the size and colors of the icons by setting
-  width, height, and background color classes.
-
-  Icons are extracted from your `assets/vendor/heroicons` directory and bundled
-  within your compiled app.css by the plugin in your `assets/tailwind.config.js`.
+  You can customize the size of the icons by setting size.
 
   ## Examples
 
-      <.icon name="hero-x-mark-solid" />
-      <.icon name="hero-arrow-path" class="ml-1 w-3 h-3 animate-spin" />
+      <.icon name="trash" />
+      <.icon name="trash" class="text-red-500" />
   """
   attr :name, :string, required: true
   attr :size, :integer, default: 16
