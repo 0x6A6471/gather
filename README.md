@@ -1,4 +1,6 @@
-# Gather
+<h1 align="center">
+  <img alt="riot logo" src="https://github.com/jakequinter/gather/assets/39658269/a4dad136-edba-4f06-8a77-63e442c8a649" width="300"/>
+</h1>
 
 ## TODO
 
