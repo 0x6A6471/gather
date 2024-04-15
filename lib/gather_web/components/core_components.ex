@@ -592,11 +592,14 @@ defmodule GatherWeb.CoreComponents do
       <.icon name="hero-arrow-path" class="ml-1 w-3 h-3 animate-spin" />
   """
   attr :name, :string, required: true
+  attr :size, :integer, default: 16
   attr :class, :string, default: nil
 
-  def icon(%{name: "hero-" <> _} = assigns) do
+  def icon(assigns) do
     ~H"""
-    <span class={[@name, @class]} />
+    <svg height={@size} width={@size} class={@class}>
+      <use href={"/sprite.svg##{@name}"} />
+    </svg>
     """
   end
 
