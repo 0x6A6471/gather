@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <symbol id="address-book" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+      <path fill="none" d="M0 0h256v256H0z"/>
+      <circle cx="136" cy="112" r="32" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
+      <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16" d="M32 72h24M32 128h24M32 184h24M88 168a60 60 0 0 1 96 0"/>
+      <rect width="192" height="160" x="40" y="48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16" rx="8" transform="rotate(90 136 128)"/>
+    </symbol>
+
+  </defs>
+</svg>
+
+

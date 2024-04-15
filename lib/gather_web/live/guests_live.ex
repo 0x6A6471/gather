@@ -91,16 +91,16 @@ defmodule GatherWeb.GuestsLive do
 
                   <a
                     href={"/guests/#{guest.id}"}
-                    class="p-1.5 rounded text-blue-700 hover:text-blue-900 hover:bg-gray-900/80 inline-flex items-center justify-center"
+                    class="p-1.5 rounded text-blue-700 hover:bg-gray-900/80 inline-flex items-center justify-center"
                   >
-                    <.icon name="hero-pencil-square" class="h-4 w-4" />
+                    <.icon name="edit" />
                   </a>
 
                   <button
                     phx-click={show_modal("delete_guest_modal")}
-                    class="p-1.5 rounded text-rose-700 hover:text-rose-900 hover:bg-gray-900/80 inline-flex items-center justify-center"
+                    class="p-1.5 rounded text-rose-700 hover:bg-gray-900/80 inline-flex items-center justify-center"
                   >
-                    <.icon name="hero-trash" class="h-4 w-4" />
+                    <.icon name="trash" />
                   </button>
                 </td>
               </tr>

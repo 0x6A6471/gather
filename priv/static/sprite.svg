@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+
+    <symbol id="alert-circle" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 13V7m.5 9.5a.5.5 0 0 1-1 0m1 0a.5.5 0 0 0-1 0m1 0h-1M22 12c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2s10 4.477 10 10Z"/>
+    </symbol>
+
+    <symbol id="bell-check" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 19.546C8.659 21.027 10.378 22 12 22c1.622 0 3.341-.973 4-2.454M9.5 12.5 11 14l3.5-3.5m3.5.69V8a6 6 0 0 0-6-6v0a6 6 0 0 0-6 6v3.19c0 .834-.354 1.629-.974 2.186l-1.107.997c-1.323 1.19-.901 3.36.771 3.969l.211.077a20.773 20.773 0 0 0 14.198 0l.21-.077c1.673-.608 2.095-2.778.772-3.969l-1.107-.997A2.941 2.941 0 0 1 18 11.19Z"/>
+    </symbol>
+
+    <symbol id="close" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18 18 6M6 6l12 12"/>
+    </symbol>
+
+    <symbol id="edit" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 2h-2c-2.8 0-4.2 0-5.27.545A5 5 0 0 0 2.545 4.73C2 5.8 2 7.2 2 10v4c0 2.8 0 4.2.545 5.27a5 5 0 0 0 2.185 2.185C5.8 22 7.2 22 10 22h4c2.8 0 4.2 0 5.27-.545a5 5 0 0 0 2.185-2.185C22 18.2 22 16.8 22 14v-2m-5-8a2.652 2.652 0 0 0 3 3m-9 6 .57-2.28c.16-.64.24-.96.369-1.259.114-.265.257-.517.425-.75.19-.265.423-.498.89-.964L17.5 3.5c.08-.08.12-.12.155-.152a2 2 0 0 1 2.69 0c.036.033.075.072.155.152v0c.08.08.12.12.151.155a2 2 0 0 1 0 2.69 4.899 4.899 0 0 1-.151.155l-4.247 4.246c-.466.467-.7.7-.963.89a4 4 0 0 1-.751.425c-.299.129-.619.209-1.259.369L11 13Z"/>
+    </symbol>
+
+    <symbol id="info" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 16v-5m.5-3a.5.5 0 0 1-1 0m1 0a.5.5 0 0 0-1 0m1 0h-1M22 12c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2s10 4.477 10 10Z"/>
+    </symbol>
+
+    <symbol id="trash" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m4 5 .646 10.976c.124 2.12.187 3.18.64 3.985a4 4 0 0 0 1.733 1.635C7.849 22 8.91 22 11.035 22h1.93c2.124 0 3.186 0 4.016-.404a4 4 0 0 0 1.734-1.635c.452-.805.515-1.865.64-3.985L20 5M4 5H2m2 0h16m0 0h2m-6 0-.453-1.359c-.197-.59-.295-.885-.478-1.103a1.5 1.5 0 0 0-.601-.434C14.203 2 13.892 2 13.27 2h-2.54c-.622 0-.933 0-1.198.104a1.5 1.5 0 0 0-.602.434c-.182.218-.28.513-.477 1.103L8 5m2 5v7m4-7v4"/>
+    </symbol>
+  </defs>
+</svg>
+
+
