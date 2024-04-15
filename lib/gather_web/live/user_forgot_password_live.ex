@@ -43,7 +43,7 @@ defmodule GatherWeb.UserForgotPasswordLive do
 
     {:noreply,
      socket
-     |> put_flash(:info, info)
+     |> put_flash(:success, info)
      |> redirect(to: ~p"/")}
   end
 end
