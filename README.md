@@ -43,3 +43,9 @@ Migrate from [ocaml](https://github.com/jakequinter/gather/tree/ocaml)
 
 - [x] deploy
 - [ ] setup github actions
+
+### Thoughts
+
+- Maybe add public version of guest pages
+  - Something like `/guests/:id`
+  - Limited info & no actions
