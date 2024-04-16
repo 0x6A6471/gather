@@ -7,6 +7,8 @@ defmodule Gather.Application do
 
   @impl true
   def start(_type, _args) do
+    Gather.Release.migrate()
+
     children = [
       GatherWeb.Telemetry,
       Gather.Repo,

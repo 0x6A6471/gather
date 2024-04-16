@@ -19,7 +19,7 @@ defmodule GatherWeb.Components do
     ~H"""
     <div class="text-left">
       <CoreComponents.modal id="delete_guest_modal">
-        <h1 class="text-lg font-medium text-gray-100">Delete <%= @guest_name %></h1>
+        <h1 class="text-lg font-medium text-gray-100">Delete <%= @guest_name %>?</h1>
         <p class="mt-2 text-sm"></p>
 
         <div class="mt-4 flex justify-end space-x-4">

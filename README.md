@@ -38,3 +38,8 @@ Migrate from [ocaml](https://github.com/jakequinter/gather/tree/ocaml)
 
 - [x] users
 - [x] guests
+
+### CI/CD
+
+- [x] deploy
+- [ ] setup github actions
