@@ -1,3 +1,112 @@
-<div>
-  hi
+<div class="max-w-screen-sm mx-auto flex justify-between items-center py-4 px-4 sm:px-0">
+  <div class="bg-gather-100 p-0.5 rounded-full">
+    <img class="h-8 w-auto" src="/images/logo.png" alt="Gather Logo" />
+  </div>
+
+  <ul class="relative z-10 flex items-center gap-4">
+    <%= if @current_user do %>
+      <li>
+        <.link
+          href={~p"/users/log_out"}
+          method="delete"
+          class="text-sm leading-6 text-gray-100 font-medium hover:text-gray-200"
+        >
+          Log out
+        </.link>
+      </li>
+      <li>
+        <.link
+          href={~p"/guests"}
+          class="text-sm border border-gather-900/50 rounded-md px-2 py-1 text-gather-600 font-medium hover:border-gather-900/70"
+        >
+          Guests
+        </.link>
+      </li>
+    <% else %>
+      <li>
+        <.link href={~p"/register"} class="text-sm text-gray-300 font-medium hover:text-gray-400">
+          Register
+        </.link>
+      </li>
+      <li>
+        <.link
+          href={~p"/login"}
+          class="text-sm border border-gather-900/50 rounded-md px-2 py-1 text-gather-600 font-medium hover:border-gather-900/70"
+        >
+          Log in
+        </.link>
+      </li>
+    <% end %>
+  </ul>
+</div>
+
+<div class="max-w-screen-sm mx-auto mt-20 space-y-8 px-4 sm:px-0">
+  <section class="space-y-2">
+    <h1 class="text-gray-50 text-4xl font-bold">Gather</h1>
+    <p>If you've somehow ended up here, welcome!</p>
+    <p>
+      Gather is a simple guest list web application designed for wedding planning. It offers an easy way to manage your guest list and track the progess of      your RSVPs and invites.
+    </p>
+  </section>
+
+  <section class="space-y-2">
+    <h2 class="text-gray-50 text-2xl font-bold">Why?</h2>
+    <p>
+      I've become increasingly frustrated with JavaScript and the complexities of the frontend ecosystem. It seems I'm not alone—many in my Twitter circle have been discussing similar concerns. Seeing
+      <a href="https://twitter.com/Leishman" class="text-gather-500 hover:text-gather-700">
+        <span class="underline">Alexander Leishman</span>
+      </a>
+      of
+      <a href="https://river.com" class="text-gather-500 hover:text-gather-700">
+        <span class="underline">River</span>
+      </a>
+      talk about his experience with Elixir and Phoenix LiveView,
+      I decided to explore these technologies myself and give them a test run.
+    </p>
+  </section>
+
+  <section class="space-y-2">
+    <h2 class="text-gray-50 text-2xl font-bold">Built With</h2>
+    <ul class="list-disc list-inside">
+      <li>
+        <a href="https://elixir-lang.org" class="text-gather-500 underline hover:text-gather-700">
+          Elixir
+        </a>
+      </li>
+      <li>
+        <a
+          href="https://www.phoenixframework.org"
+          class="text-gather-500 underline hover:text-gather-700"
+        >
+          Phoenix LiveView
+        </a>
+      </li>
+      <li>
+        <a
+          href="https://www.sqlite.org/index.html"
+          class="text-gather-500 underline hover:text-gather-700"
+        >
+          SQLite
+        </a>
+      </li>
+      <li>
+        <a href="https://tailwindcss.com" class="text-gather-500 underline hover:text-gather-700">
+          Tailwind CSS
+        </a>
+      </li>
+      <li>
+        <a href="https://fly.io" class="text-gather-500 underline hover:text-gather-700">
+          Fly.io
+        </a>
+      </li>
+      <li>
+        <div class="inline-flex items-center gap-x-2">
+          <p>
+            <span class="line-through">NO</span> (minimal) JavaScript:
+          </p>
+          <img src="/images/minimaljs.png" alt="No JavaScript" class="h-5 w-auto" />
+        </div>
+      </li>
+    </ul>
+  </section>
 </div>

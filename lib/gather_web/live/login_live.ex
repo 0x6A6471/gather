@@ -4,7 +4,11 @@ defmodule GatherWeb.UserLoginLive do
   def render(assigns) do
     ~H"""
     <div class="flex h-screen flex-col justify-center px-4">
-      <img class="mx-auto h-28 rounded-full w-auto" src="/images/gather.webp" alt="Gather" />
+      <img
+        class="bg-gather-100 p-2 mx-auto h-28 rounded-full w-auto"
+        src="/images/logo.png"
+        alt="Gather Logo"
+      />
       <h2 class="mt-6 text-center text-2xl font-bold leading-9 tracking-tight text-gray-100">
         Sign in to Gather
       </h2>
