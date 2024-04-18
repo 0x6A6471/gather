@@ -18,7 +18,8 @@ defmodule Gather.GuestsFixtures do
     guest_attrs =
       %{
         name: "Jane Doe",
-        address: "123 Main St.",
+        address_line_1: "123 Main St.",
+        address_line_2: "Apt 802",
         city: "Boston",
         state: "MA",
         zip: "02111",
