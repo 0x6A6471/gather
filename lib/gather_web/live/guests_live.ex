@@ -6,14 +6,29 @@ defmodule GatherWeb.GuestsLive do
 
   def render(assigns) do
     ~H"""
-    <.simple_form for={@form} id="download_form" action={~p"/csv?_action=csv_download"}>
-      <button>dowload csv</button>
-    </.simple_form>
-
-    <div class="max-w-screen-md mx-auto">
+    <div class="max-w-screen-md mx-auto mt-24">
       <div class="flex items-center justify-between">
         <h1 class="font-bold text-3xl text-gray-50">Guests</h1>
-        <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
+        <div class="flex items-center space-x-2">
+          <.simple_form
+            for={@form}
+            id="download_csv_form"
+            action={~p"/download?_action=download&type=csv"}
+          >
+            <button class="text-sm inline-flex items-center gap-x-1 hover:bg-gray-900 p-1 rounded">
+              <.icon name="file-download" /> csv
+            </button>
+          </.simple_form>
+
+          <.simple_form
+            for={@form}
+            id="download_doc_form"
+            action={~p"/download?_action=download&type=doc"}
+          >
+            <button class="text-sm inline-flex items-center gap-x-1 hover:bg-gray-900 p-1 rounded">
+              <.icon name="file-download" /> doc
+            </button>
+          </.simple_form>
           <a
             href="/guests/new"
             class="block rounded-md bg-gather-500 px-3 py-2 text-center text-sm font-medium text-white hover:bg-gather-600"

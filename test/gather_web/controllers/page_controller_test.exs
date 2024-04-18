@@ -3,6 +3,6 @@ defmodule GatherWeb.PageControllerTest do
 
   test "GET /", %{conn: conn} do
     conn = get(conn, ~p"/")
-    assert html_response(conn, 200) =~ "hi"
+    assert html_response(conn, 200) =~ "If you've somehow ended up here, welcome!"
   end
 end
