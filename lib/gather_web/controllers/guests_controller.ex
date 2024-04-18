@@ -1,7 +1,6 @@
 defmodule GatherWeb.GuestsController do
   use GatherWeb, :controller
 
-  alias Gather.Accounts
   alias Gather.Guests
 
   def create(conn, %{"_action" => "guest_created"} = params) do
@@ -10,8 +9,8 @@ defmodule GatherWeb.GuestsController do
     |> create(params, "Guest added successfully!")
   end
 
-  defp create(conn, %{"guest" => guest_params, "user_id" => user_id}, _info) do
-    user = Accounts.get_user!(user_id)
+  defp create(conn, %{"guest" => guest_params}, _info) do
+    user = conn.assigns.current_user
 
     if user do
       case Guests.create_guest(user, guest_params) do

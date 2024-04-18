@@ -75,6 +75,7 @@ defmodule GatherWeb.Router do
     end
 
     post "/guests", GuestsController, :create
+    post "/csv", CsvController, :create
   end
 
   scope "/", GatherWeb do

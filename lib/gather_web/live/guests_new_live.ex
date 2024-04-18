@@ -16,8 +16,6 @@ defmodule GatherWeb.GuestsNewLive do
       >
         <h1 class="text-3xl font-bold leading-7 text-center text-gray-100">Add Guest</h1>
 
-        <input type="hidden" name="user_id" value={@user_id} />
-
         <div class="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-6">
           <div class="sm:col-span-3">
             <.input

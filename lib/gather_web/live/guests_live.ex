@@ -6,6 +6,10 @@ defmodule GatherWeb.GuestsLive do
 
   def render(assigns) do
     ~H"""
+    <.simple_form for={@form} id="download_form" action={~p"/csv?_action=csv_download"}>
+      <button>dowload csv</button>
+    </.simple_form>
+
     <div class="max-w-screen-md mx-auto">
       <div class="flex items-center justify-between">
         <h1 class="font-bold text-3xl text-gray-50">Guests</h1>
@@ -114,9 +118,10 @@ defmodule GatherWeb.GuestsLive do
 
   def mount(_params, _session, socket) do
     user_id = socket.assigns.current_user.id
+    form = to_form(%{"name" => "name"})
 
     socket =
-      assign(socket, guests: Guests.list_guests(user_id))
+      assign(socket, guests: Guests.list_guests(user_id), form: form)
 
     {:ok, socket}
   end
