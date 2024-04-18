@@ -85,7 +85,7 @@ defmodule GatherWeb.GuestsLive do
             </thead>
             <tbody class="divide-y divide-gather-900 bg-gray-800/80">
               <tr :for={guest <- @guests}>
-                <td class="whitespace-nowrap p-2 text-sm font-medium text-gray-100 sm:pl-6">
+                <td class="p-2 text-sm font-medium text-gray-100 sm:pl-6">
                   <%= guest.name %>
                 </td>
                 <td class="whitespace-nowrap p-2 text-sm">
