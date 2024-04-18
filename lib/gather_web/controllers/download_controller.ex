@@ -20,10 +20,6 @@ defmodule GatherWeb.DownloadController do
         |> redirect(to: "/guests")
         |> halt()
     end
-
-    conn
-    |> put_session(:user_return_to, ~p"/guests")
-    |> generate_and_download_doc(params, "Generated successfully!", guests)
   end
 
   defp generate_and_download_csv(conn, _params, _info, guests) do
@@ -82,7 +78,7 @@ defmodule GatherWeb.DownloadController do
       Enum.map(guests, fn guest ->
         """
         #{guest.name}
-        #{guest.address_line_1}, #{guest.address_line_2}
+        #{guest.address_line_1}#{if guest.address_line_2, do: ", #{guest.address_line_2}"}
         #{guest.city}, #{guest.state} #{guest.zip}
         \n
         """
