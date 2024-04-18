@@ -36,8 +36,15 @@ Migrate from [ocaml](https://github.com/jakequinter/gather/tree/ocaml)
 
 ### Tests
 
-- [x] users
-- [x] guests
+- [x] views
+
+  - [x] users
+  - [x] guests
+
+- [ ] controllers
+  - [x] users
+  - [ ] guests
+  - [ ] download
 
 ### CI/CD
 

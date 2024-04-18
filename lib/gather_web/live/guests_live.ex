@@ -6,10 +6,29 @@ defmodule GatherWeb.GuestsLive do
 
   def render(assigns) do
     ~H"""
-    <div class="max-w-screen-md mx-auto">
+    <div class="max-w-screen-md mx-auto mt-24">
       <div class="flex items-center justify-between">
         <h1 class="font-bold text-3xl text-gray-50">Guests</h1>
-        <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
+        <div class="flex items-center space-x-2">
+          <.simple_form
+            for={@form}
+            id="download_csv_form"
+            action={~p"/download?_action=download&type=csv"}
+          >
+            <button class="text-sm inline-flex items-center gap-x-1 hover:bg-gray-900 p-1 rounded">
+              <.icon name="file-download" /> csv
+            </button>
+          </.simple_form>
+
+          <.simple_form
+            for={@form}
+            id="download_doc_form"
+            action={~p"/download?_action=download&type=doc"}
+          >
+            <button class="text-sm inline-flex items-center gap-x-1 hover:bg-gray-900 p-1 rounded">
+              <.icon name="file-download" /> doc
+            </button>
+          </.simple_form>
           <a
             href="/guests/new"
             class="block rounded-md bg-gather-500 px-3 py-2 text-center text-sm font-medium text-white hover:bg-gather-600"
@@ -25,68 +44,68 @@ defmodule GatherWeb.GuestsLive do
               <tr>
                 <th
                   scope="col"
-                  class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-100 sm:pl-6 whitespace-nowrap"
+                  class="py-3.5 px-2 text-left text-sm font-semibold text-gray-100 sm:pl-6 whitespace-nowrap"
                 >
                   Name
                 </th>
                 <th
                   scope="col"
-                  class="px-3 py-3.5 text-left text-sm font-semibold text-gray-100 whitespace-nowrap"
+                  class="px-2 py-3.5 text-left text-sm font-semibold text-gray-100 whitespace-nowrap"
                 >
                   Address
                 </th>
                 <th
                   scope="col"
-                  class="px-3 py-3.5 text-left text-sm font-semibold text-gray-100 whitespace-nowrap"
+                  class="px-2 py-3.5 text-left text-sm font-semibold text-gray-100 whitespace-nowrap"
                 >
                   Guest Amount
                 </th>
                 <th
                   scope="col"
-                  class="px-3 py-3.5 text-left text-sm font-semibold text-gray-100 whitespace-nowrap"
+                  class="px-2 py-3.5 text-left text-sm font-semibold text-gray-100 whitespace-nowrap"
                 >
                   Save the Date
                 </th>
                 <th
                   scope="col"
-                  class="px-3 py-3.5 text-left text-sm font-semibold text-gray-100 whitespace-nowrap"
+                  class="px-2 py-3.5 text-left text-sm font-semibold text-gray-100 whitespace-nowrap"
                 >
                   RSVP
                 </th>
                 <th
                   scope="col"
-                  class="px-3 py-3.5 text-left text-sm font-semibold text-gray-100 whitespace-nowrap"
+                  class="px-2 py-3.5 text-left text-sm font-semibold text-gray-100 whitespace-nowrap"
                 >
                   Invite
                 </th>
-                <th scope="col" class="relative py-3.5 pl-3 pr-4">
+                <th scope="col" class="relative py-3.5 pl-3 px-2">
                   <span class="sr-only">Edit</span>
                 </th>
               </tr>
             </thead>
             <tbody class="divide-y divide-gather-900 bg-gray-800/80">
               <tr :for={guest <- @guests}>
-                <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-100 sm:pl-6">
+                <td class="whitespace-nowrap p-2 text-sm font-medium text-gray-100 sm:pl-6">
                   <%= guest.name %>
                 </td>
-                <td class="whitespace-nowrap px-3 py-4 text-sm">
+                <td class="whitespace-nowrap p-2 text-sm">
                   <span class="block"><%= guest.address %></span>
                   <%= guest.city %>, <%= guest.state %>
                   <%= guest.zip %>
                 </td>
-                <td class="whitespace-nowrap px-3 py-4 text-sm">
+                <td class="whitespace-nowrap p-2 text-sm text-right">
                   <%= guest.guest_amount %>
                 </td>
-                <td class="whitespace-nowrap px-3 py-4 text-sm">
+                <td class="whitespace-nowrap p-2 text-sm">
                   <%= guest.save_the_date_sent %>
                 </td>
-                <td class="whitespace-nowrap px-3 py-4 text-sm">
+                <td class="whitespace-nowrap p-2 text-sm">
                   <%= guest.rsvp_sent %>
                 </td>
-                <td class="whitespace-nowrap px-3 py-4 text-sm">
+                <td class="whitespace-nowrap p-2 text-sm">
                   <%= guest.invite_sent %>
                 </td>
-                <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium">
+                <td class="relative whitespace-nowrap p-2 text-right text-sm font-medium">
                   <Components.delete_guest_modal guest_id={guest.id} guest_name={guest.name} />
 
                   <a
@@ -114,9 +133,10 @@ defmodule GatherWeb.GuestsLive do
 
   def mount(_params, _session, socket) do
     user_id = socket.assigns.current_user.id
+    form = to_form(%{"name" => "name"})
 
     socket =
-      assign(socket, guests: Guests.list_guests(user_id))
+      assign(socket, guests: Guests.list_guests(user_id), form: form)
 
     {:ok, socket}
   end

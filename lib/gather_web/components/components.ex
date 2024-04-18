@@ -18,7 +18,7 @@ defmodule GatherWeb.Components do
   def delete_guest_modal(assigns) do
     ~H"""
     <div class="text-left">
-      <CoreComponents.modal id="delete_guest_modal">
+      <CoreComponents.modal id={"delete_guest_modal-#{@guest_id}"}>
         <h1 class="text-lg font-medium text-gray-100">Delete <%= @guest_name %>?</h1>
         <p class="mt-2 text-sm"></p>
 
