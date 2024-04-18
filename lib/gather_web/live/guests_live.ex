@@ -89,7 +89,10 @@ defmodule GatherWeb.GuestsLive do
                   <%= guest.name %>
                 </td>
                 <td class="whitespace-nowrap p-2 text-sm">
-                  <span class="block"><%= guest.address %></span>
+                  <span class="block">
+                    <%= guest.address_line_1 %><%= if guest.address_line_2,
+                      do: ", " <> guest.address_line_2 %>
+                  </span>
                   <%= guest.city %>, <%= guest.state %>
                   <%= guest.zip %>
                 </td>
@@ -116,7 +119,7 @@ defmodule GatherWeb.GuestsLive do
                   </a>
 
                   <button
-                    phx-click={show_modal("delete_guest_modal")}
+                    phx-click={show_modal("delete_guest_modal_#{guest.id}")}
                     class="p-1.5 rounded text-rose-700 hover:bg-gray-900/80 inline-flex items-center justify-center"
                   >
                     <.icon name="trash" />

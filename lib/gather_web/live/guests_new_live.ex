@@ -39,13 +39,22 @@ defmodule GatherWeb.GuestsNewLive do
             />
           </div>
 
-          <div class="sm:col-span-4">
+          <div class="sm:col-span-3">
             <.input
-              field={@form[:address]}
+              field={@form[:address_line_1]}
               type="text"
               label="Street address"
               placeholder="123 Main St."
               required
+            />
+          </div>
+
+          <div class="sm:col-span-3">
+            <.input
+              field={@form[:address_line_2]}
+              type="text"
+              label="Address line 2"
+              placeholder="Apt 802"
             />
           </div>
 

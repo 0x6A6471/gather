@@ -6,7 +6,8 @@ defmodule Gather.Guests.Guest do
     field :name, :string
     field :state, :string
     field :zip, :string
-    field :address, :string
+    field :address_line_1, :string
+    field :address_line_2, :string
     field :city, :string
     field :guest_amount, :integer
     field :rsvp_sent, :boolean, default: false
@@ -22,7 +23,8 @@ defmodule Gather.Guests.Guest do
     guest
     |> cast(attrs, [
       :name,
-      :address,
+      :address_line_1,
+      :address_line_2,
       :city,
       :state,
       :zip,
@@ -34,7 +36,7 @@ defmodule Gather.Guests.Guest do
     ])
     |> validate_required([
       :name,
-      :address,
+      :address_line_1,
       :city,
       :state,
       :zip,

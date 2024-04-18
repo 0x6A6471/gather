@@ -13,7 +13,7 @@ defmodule Gather.GuestsTest do
       name: nil,
       state: nil,
       zip: nil,
-      address: nil,
+      address_line_1: nil,
       city: nil,
       guest_amount: nil,
       rsvp_sent: nil,
@@ -36,7 +36,8 @@ defmodule Gather.GuestsTest do
         name: "some name",
         state: "some state",
         zip: "12345",
-        address: "some address",
+        address_line_1: "some address",
+        address_line_2: "line 2",
         city: "some city",
         guest_amount: 42,
         rsvp_sent: true,
@@ -50,7 +51,35 @@ defmodule Gather.GuestsTest do
       assert guest.name == "some name"
       assert guest.state == "some state"
       assert guest.zip == "12345"
-      assert guest.address == "some address"
+      assert guest.address_line_1 == "some address"
+      assert guest.address_line_2 == "line 2"
+      assert guest.city == "some city"
+      assert guest.guest_amount == 42
+      assert guest.rsvp_sent == true
+      assert guest.invite_sent == true
+      assert guest.save_the_date_sent == true
+    end
+
+    test "create_guest/1 creates guests without address_line_2" do
+      valid_attrs = %{
+        name: "some name",
+        state: "some state",
+        zip: "12345",
+        address_line_1: "some address",
+        city: "some city",
+        guest_amount: 42,
+        rsvp_sent: true,
+        invite_sent: true,
+        save_the_date_sent: true
+      }
+
+      user = AccountsFixtures.user_fixture()
+
+      assert {:ok, %Guest{} = guest} = Guests.create_guest(user, valid_attrs)
+      assert guest.name == "some name"
+      assert guest.state == "some state"
+      assert guest.zip == "12345"
+      assert guest.address_line_1 == "some address"
       assert guest.city == "some city"
       assert guest.guest_amount == 42
       assert guest.rsvp_sent == true
@@ -71,7 +100,8 @@ defmodule Gather.GuestsTest do
         name: "some updated name",
         state: "some updated state",
         zip: "00000",
-        address: "some updated address",
+        address_line_1: "some updated address",
+        address_line_2: "updated line 2",
         city: "some updated city",
         guest_amount: 43,
         rsvp_sent: false,
@@ -83,7 +113,35 @@ defmodule Gather.GuestsTest do
       assert guest.name == "some updated name"
       assert guest.state == "some updated state"
       assert guest.zip == "00000"
-      assert guest.address == "some updated address"
+      assert guest.address_line_1 == "some updated address"
+      assert guest.address_line_2 == "updated line 2"
+      assert guest.city == "some updated city"
+      assert guest.guest_amount == 43
+      assert guest.rsvp_sent == false
+      assert guest.invite_sent == false
+      assert guest.save_the_date_sent == false
+    end
+
+    test "update_guest/2updates the guest without address_line_2" do
+      guest = guest_fixture()
+
+      update_attrs = %{
+        name: "some updated name",
+        state: "some updated state",
+        zip: "00000",
+        address_line_1: "some updated address",
+        city: "some updated city",
+        guest_amount: 43,
+        rsvp_sent: false,
+        invite_sent: false,
+        save_the_date_sent: false
+      }
+
+      assert {:ok, %Guest{} = guest} = Guests.update_guest(guest, update_attrs)
+      assert guest.name == "some updated name"
+      assert guest.state == "some updated state"
+      assert guest.zip == "00000"
+      assert guest.address_line_1 == "some updated address"
       assert guest.city == "some updated city"
       assert guest.guest_amount == 43
       assert guest.rsvp_sent == false

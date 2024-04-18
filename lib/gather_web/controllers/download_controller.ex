@@ -31,7 +31,8 @@ defmodule GatherWeb.DownloadController do
       Enum.map(guests, fn guest ->
         %{
           "Name" => guest.name,
-          "Address" => guest.address,
+          "Address" => guest.address_line_1,
+          "Address Line 2" => guest.address_line_2,
           "City" => guest.city,
           "State" => guest.state,
           "Zip" => guest.zip,
@@ -48,6 +49,7 @@ defmodule GatherWeb.DownloadController do
         headers: [
           "Name",
           "Address",
+          "Address Line 2",
           "City",
           "State",
           "Zip",
@@ -80,7 +82,7 @@ defmodule GatherWeb.DownloadController do
       Enum.map(guests, fn guest ->
         """
         #{guest.name}
-        #{guest.address}
+        #{guest.address_line_1}, #{guest.address_line_2}
         #{guest.city}, #{guest.state} #{guest.zip}
         \n
         """
