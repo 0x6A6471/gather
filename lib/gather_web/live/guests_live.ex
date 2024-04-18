@@ -44,68 +44,68 @@ defmodule GatherWeb.GuestsLive do
               <tr>
                 <th
                   scope="col"
-                  class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-100 sm:pl-6 whitespace-nowrap"
+                  class="py-3.5 px-2 text-left text-sm font-semibold text-gray-100 sm:pl-6 whitespace-nowrap"
                 >
                   Name
                 </th>
                 <th
                   scope="col"
-                  class="px-3 py-3.5 text-left text-sm font-semibold text-gray-100 whitespace-nowrap"
+                  class="px-2 py-3.5 text-left text-sm font-semibold text-gray-100 whitespace-nowrap"
                 >
                   Address
                 </th>
                 <th
                   scope="col"
-                  class="px-3 py-3.5 text-left text-sm font-semibold text-gray-100 whitespace-nowrap"
+                  class="px-2 py-3.5 text-left text-sm font-semibold text-gray-100 whitespace-nowrap"
                 >
                   Guest Amount
                 </th>
                 <th
                   scope="col"
-                  class="px-3 py-3.5 text-left text-sm font-semibold text-gray-100 whitespace-nowrap"
+                  class="px-2 py-3.5 text-left text-sm font-semibold text-gray-100 whitespace-nowrap"
                 >
                   Save the Date
                 </th>
                 <th
                   scope="col"
-                  class="px-3 py-3.5 text-left text-sm font-semibold text-gray-100 whitespace-nowrap"
+                  class="px-2 py-3.5 text-left text-sm font-semibold text-gray-100 whitespace-nowrap"
                 >
                   RSVP
                 </th>
                 <th
                   scope="col"
-                  class="px-3 py-3.5 text-left text-sm font-semibold text-gray-100 whitespace-nowrap"
+                  class="px-2 py-3.5 text-left text-sm font-semibold text-gray-100 whitespace-nowrap"
                 >
                   Invite
                 </th>
-                <th scope="col" class="relative py-3.5 pl-3 pr-4">
+                <th scope="col" class="relative py-3.5 pl-3 px-2">
                   <span class="sr-only">Edit</span>
                 </th>
               </tr>
             </thead>
             <tbody class="divide-y divide-gather-900 bg-gray-800/80">
               <tr :for={guest <- @guests}>
-                <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-100 sm:pl-6">
+                <td class="whitespace-nowrap p-2 text-sm font-medium text-gray-100 sm:pl-6">
                   <%= guest.name %>
                 </td>
-                <td class="whitespace-nowrap px-3 py-4 text-sm">
+                <td class="whitespace-nowrap p-2 text-sm">
                   <span class="block"><%= guest.address %></span>
                   <%= guest.city %>, <%= guest.state %>
                   <%= guest.zip %>
                 </td>
-                <td class="whitespace-nowrap px-3 py-4 text-sm">
+                <td class="whitespace-nowrap p-2 text-sm text-right">
                   <%= guest.guest_amount %>
                 </td>
-                <td class="whitespace-nowrap px-3 py-4 text-sm">
+                <td class="whitespace-nowrap p-2 text-sm">
                   <%= guest.save_the_date_sent %>
                 </td>
-                <td class="whitespace-nowrap px-3 py-4 text-sm">
+                <td class="whitespace-nowrap p-2 text-sm">
                   <%= guest.rsvp_sent %>
                 </td>
-                <td class="whitespace-nowrap px-3 py-4 text-sm">
+                <td class="whitespace-nowrap p-2 text-sm">
                   <%= guest.invite_sent %>
                 </td>
-                <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium">
+                <td class="relative whitespace-nowrap p-2 text-right text-sm font-medium">
                   <Components.delete_guest_modal guest_id={guest.id} guest_name={guest.name} />
 
                   <a
