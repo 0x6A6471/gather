@@ -24,7 +24,7 @@ defmodule GatherWeb.Components do
 
         <div class="mt-4 flex justify-end space-x-4">
           <button
-            phx-click={CoreComponents.hide_modal("delete_guest_modal")}
+            phx-click={CoreComponents.hide_modal("delete_guest_modal_#{@guest_id}")}
             class="text-gray-100 hover:text-gray-200"
           >
             Cancel
