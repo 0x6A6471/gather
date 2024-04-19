@@ -6,7 +6,7 @@ defmodule GatherWeb.GuestsLive do
 
   def render(assigns) do
     ~H"""
-    <div class="max-w-screen-md mx-auto mt-24">
+    <div class="max-w-screen-lg mx-auto mt-24">
       <div class="flex items-center justify-between">
         <h1 class="font-bold text-3xl text-gray-50">Guests</h1>
         <div class="flex items-center space-x-2">
@@ -29,6 +29,27 @@ defmodule GatherWeb.GuestsLive do
               <.icon name="file-download" /> doc
             </button>
           </.simple_form>
+
+          <.form
+            for={@form}
+            id="search_form"
+            class="relative flex-grow flex items-stretch focus-within:z-10"
+            phx-submit="search"
+          >
+            <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 mt-0.5">
+              <.icon name="search" />
+            </div>
+            <.input
+              type="text"
+              name="search"
+              id="search"
+              value={@search}
+              placeholder="Search by name..."
+              autocomplete="off"
+              has_icon
+            />
+          </.form>
+
           <a
             href="/guests/new"
             class="block rounded-md bg-gather-500 px-3 py-2 text-center text-sm font-medium text-white hover:bg-gather-600"
@@ -40,7 +61,7 @@ defmodule GatherWeb.GuestsLive do
       <div class="mt-8 flow-root">
         <div class="overflow-x-auto rounded-lg shadow ring-1 ring-black ring-opacity-5">
           <table class="min-w-full bg-gray-900 rounded-lg divide-y divide-gather-900">
-            <thead class="bg-gray-900/80">
+            <thead class="bg-gray-900/50">
               <tr>
                 <th
                   scope="col"
@@ -83,7 +104,7 @@ defmodule GatherWeb.GuestsLive do
                 </th>
               </tr>
             </thead>
-            <tbody class="divide-y divide-gather-900 bg-gray-800/80">
+            <tbody class="divide-y divide-gather-900 bg-gray-800/50">
               <tr :for={guest <- @guests}>
                 <td class="p-2 text-sm font-medium text-gray-100 sm:pl-4" style="min-width: 175px;">
                   <%= guest.name %>
@@ -113,14 +134,14 @@ defmodule GatherWeb.GuestsLive do
 
                   <a
                     href={"/guests/#{guest.id}"}
-                    class="p-1.5 rounded text-blue-700 hover:bg-gray-900/80 inline-flex items-center justify-center"
+                    class="p-1.5 rounded text-blue-800 hover:bg-gray-900/80 inline-flex items-center justify-center"
                   >
                     <.icon name="edit" />
                   </a>
 
                   <button
                     phx-click={show_modal("delete_guest_modal_#{guest.id}")}
-                    class="p-1.5 rounded text-rose-700 hover:bg-gray-900/80 inline-flex items-center justify-center"
+                    class="p-1.5 rounded text-rose-800 hover:bg-gray-900/80 inline-flex items-center justify-center"
                   >
                     <.icon name="trash" />
                   </button>
@@ -139,9 +160,26 @@ defmodule GatherWeb.GuestsLive do
     form = to_form(%{"name" => "name"})
 
     socket =
-      assign(socket, guests: Guests.list_guests(user_id), form: form)
+      assign(socket,
+        guests: Guests.list_guests(user_id),
+        search: "",
+        form: form
+      )
 
     {:ok, socket}
+  end
+
+  def handle_event("search", %{"search" => search}, socket) do
+    user_id = socket.assigns.current_user.id
+
+    socket =
+      assign(
+        socket,
+        search: search,
+        guests: Guests.search_by_name(search, user_id)
+      )
+
+    {:noreply, socket}
   end
 
   def handle_event("delete", %{"id" => id}, socket) do
