@@ -44,7 +44,7 @@ defmodule GatherWeb.GuestsLive do
               <tr>
                 <th
                   scope="col"
-                  class="py-3.5 px-2 text-left text-sm font-semibold text-gray-100 sm:pl-6 whitespace-nowrap"
+                  class="py-3.5 px-2 text-left text-sm font-semibold text-gray-100 sm:pl-4 whitespace-nowrap"
                 >
                   Name
                 </th>
@@ -78,14 +78,14 @@ defmodule GatherWeb.GuestsLive do
                 >
                   Invite
                 </th>
-                <th scope="col" class="relative py-3.5 pl-3 px-2">
+                <th scope="col" class="relative py-3.5 px-2 sm:pr-4">
                   <span class="sr-only">Edit</span>
                 </th>
               </tr>
             </thead>
             <tbody class="divide-y divide-gather-900 bg-gray-800/80">
               <tr :for={guest <- @guests}>
-                <td class="p-2 text-sm font-medium text-gray-100 sm:pl-6">
+                <td class="p-2 text-sm font-medium text-gray-100 sm:pl-4" style="min-width: 175px;">
                   <%= guest.name %>
                 </td>
                 <td class="whitespace-nowrap p-2 text-sm">
@@ -108,7 +108,7 @@ defmodule GatherWeb.GuestsLive do
                 <td class="whitespace-nowrap p-2 text-sm">
                   <%= guest.invite_sent %>
                 </td>
-                <td class="relative whitespace-nowrap p-2 text-right text-sm font-medium">
+                <td class="relative whitespace-nowrap p-2 text-right text-sm font-medium sm:pr-4">
                   <Components.delete_guest_modal guest_id={guest.id} guest_name={guest.name} />
 
                   <a
