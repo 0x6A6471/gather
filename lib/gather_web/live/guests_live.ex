@@ -52,7 +52,7 @@ defmodule GatherWeb.GuestsLive do
 
           <a
             href="/guests/new"
-            class="block rounded-md bg-gather-500 px-3 py-2 text-center text-sm font-medium text-white hover:bg-gather-600"
+            class="block rounded-md bg-gather-500 px-3 py-2 text-center font-medium text-white hover:bg-gather-600"
           >
             Add guest
           </a>
