@@ -41,4 +41,24 @@ defmodule GatherWeb.Components do
     </div>
     """
   end
+
+  attr :label, :string, required: true
+  attr :color, :string, default: "gray"
+
+  attr :colors, :map,
+    default: %{
+      "green" => "bg-emerald-500/10 text-emerald-400 ring-emerald-500/20",
+      "red" => "bg-rose-500/10 text-rose-400 ring-rose-500/20"
+    }
+
+  def badge(assigns) do
+    ~H"""
+    <span class={[
+      "inline-flex items-center rounded-md px-2 py-1 text-xs font-medium ring-1 ring-inset",
+      @colors[@color]
+    ]}>
+      <%= @label %>
+    </span>
+    """
+  end
 end

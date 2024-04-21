@@ -7,10 +7,11 @@ defmodule GatherWeb.GuestsLive do
   def render(assigns) do
     ~H"""
     <div class="max-w-screen-lg mx-auto mt-24">
-      <div class="flex items-center justify-between">
-        <h1 class="font-bold text-3xl text-gray-50">Guests</h1>
+      <div class="flex flex-col sm:flex-row items-center justify-between">
+        <h1 class="sm:text-left mb-8 sm:mb-0 font-bold text-3xl text-gray-50">Guests</h1>
         <div class="flex items-center space-x-2">
           <.simple_form
+            class="hidden sm:block"
             for={@form}
             id="download_csv_form"
             action={~p"/download?_action=download&type=csv"}
@@ -21,6 +22,7 @@ defmodule GatherWeb.GuestsLive do
           </.simple_form>
 
           <.simple_form
+            class="hidden sm:block"
             for={@form}
             id="download_doc_form"
             action={~p"/download?_action=download&type=doc"}
@@ -121,13 +123,25 @@ defmodule GatherWeb.GuestsLive do
                   <%= guest.guest_amount %>
                 </td>
                 <td class="whitespace-nowrap p-2 text-sm">
-                  <%= guest.save_the_date_sent %>
+                  <%= if guest.save_the_date_sent do %>
+                    <Components.badge label="Yes" color="green" />
+                  <% else %>
+                    <Components.badge label="No" color="red" />
+                  <% end %>
                 </td>
                 <td class="whitespace-nowrap p-2 text-sm">
-                  <%= guest.rsvp_sent %>
+                  <%= if guest.rsvp_sent do %>
+                    <Components.badge label="Yes" color="green" />
+                  <% else %>
+                    <Components.badge label="No" color="red" />
+                  <% end %>
                 </td>
                 <td class="whitespace-nowrap p-2 text-sm">
-                  <%= guest.invite_sent %>
+                  <%= if guest.invite_sent do %>
+                    <Components.badge label="Yes" color="green" />
+                  <% else %>
+                    <Components.badge label="No" color="red" />
+                  <% end %>
                 </td>
                 <td class="relative whitespace-nowrap p-2 text-right text-sm font-medium sm:pr-4">
                   <Components.delete_guest_modal guest_id={guest.id} guest_name={guest.name} />
