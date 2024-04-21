@@ -273,6 +273,7 @@ defmodule GatherWeb.CoreComponents do
   attr :name, :any
   attr :label, :string, default: nil
   attr :value, :any
+  attr :has_icon, :boolean, default: false
 
   attr :type, :string,
     default: "text",
@@ -379,7 +380,10 @@ defmodule GatherWeb.CoreComponents do
         id={@id}
         value={Phoenix.HTML.Form.normalize_value(@type, @value)}
         class={[
-          "mt-0.5 block bg-transparent text-gray-50 w-full rounded-md border-0 py-2 ring-1 ring-inset ring-gray-700 hover:ring-inset hover:ring-gray-600 focus:ring-inset focus:ring-gray-600",
+          "block w-full rounded-md placeholder:text-sm border-0",
+          !@has_icon &&
+            "mt-0.5 bg-transparent text-gray-50 py-2 ring-1 ring-inset ring-gray-700 hover:ring-inset hover:ring-gray-600 focus:ring-inset focus:ring-gray-600",
+          @has_icon && "pl-8 bg-white text-gray-900 focus:ring-0",
           "phx-no-feedback:border-gray-300 phx-no-feedback:focus:border-gray-400",
           @errors == [] && "border-gray-300 focus:border-gray-400",
           @errors != [] && "border-rose-400 focus:border-rose-400"

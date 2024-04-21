@@ -106,6 +106,23 @@ defmodule Gather.Guests do
   end
 
   @doc """
+  Returns a lsit of guests that match the search term.
+
+  ## Examples
+
+      iex> search_by_name(query, user_id)
+      [%Guest{}, ...]
+  """
+  def search_by_name(query, user_id) do
+    query =
+      from g in Guest,
+        where: like(fragment("lower(?)", g.name), ^"%#{String.downcase(query)}%"),
+        where: g.user_id == ^user_id
+
+    Repo.all(query)
+  end
+
+  @doc """
   Returns a list of states.
 
   ## Examples

@@ -25,6 +25,10 @@
       <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 16v-5m.5-3a.5.5 0 0 1-1 0m1 0a.5.5 0 0 0-1 0m1 0h-1M22 12c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2s10 4.477 10 10Z"/>
     </symbol>
 
+    <symbol id="search" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+      <path stroke="currentColor" stroke-linecap="round" stroke-width="1.5" d="m21 21-3.636-3.636m0 0A9 9 0 1 0 4.636 4.636a9 9 0 0 0 12.728 12.728Z"/>
+  </symbol>
+
     <symbol id="trash" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
       <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m4 5 .646 10.976c.124 2.12.187 3.18.64 3.985a4 4 0 0 0 1.733 1.635C7.849 22 8.91 22 11.035 22h1.93c2.124 0 3.186 0 4.016-.404a4 4 0 0 0 1.734-1.635c.452-.805.515-1.865.64-3.985L20 5M4 5H2m2 0h16m0 0h2m-6 0-.453-1.359c-.197-.59-.295-.885-.478-1.103a1.5 1.5 0 0 0-.601-.434C14.203 2 13.892 2 13.27 2h-2.54c-.622 0-.933 0-1.198.104a1.5 1.5 0 0 0-.602.434c-.182.218-.28.513-.477 1.103L8 5m2 5v7m4-7v4"/>
     </symbol>

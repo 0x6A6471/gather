@@ -165,5 +165,15 @@ defmodule Gather.GuestsTest do
       guest = guest_fixture()
       assert %Ecto.Changeset{} = Guests.change_guest(guest)
     end
+
+    test "search_by_name/2 returns a list of matched guests" do
+      guests = [guest_fixture()]
+
+      assert Guests.search_by_name("Ja", 1) == guests
+    end
+
+    test "search_by_name/2 returns an empty list with no matched query" do
+      assert Guests.search_by_name("no user", 1) == []
+    end
   end
 end
