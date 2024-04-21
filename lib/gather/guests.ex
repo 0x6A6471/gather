@@ -18,7 +18,7 @@ defmodule Gather.Guests do
 
   """
   def list_guests(user_id) do
-    Repo.all(from g in Guest, where: g.user_id == ^user_id)
+    Repo.all(from g in Guest, where: g.user_id == ^user_id, order_by: [asc: g.name])
   end
 
   @doc """
