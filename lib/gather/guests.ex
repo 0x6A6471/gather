@@ -132,8 +132,8 @@ defmodule Gather.Guests do
   """
   def list_states do
     [
-      "AL",
       "AK",
+      "AL",
       "AR",
       "AZ",
       "CA",
@@ -158,14 +158,14 @@ defmodule Gather.Guests do
       "MO",
       "MS",
       "MT",
+      "NC",
+      "ND",
       "NE",
       "NH",
       "NJ",
       "NM",
       "NV",
       "NY",
-      "NC",
-      "ND",
       "OH",
       "OK",
       "OR",
@@ -179,8 +179,8 @@ defmodule Gather.Guests do
       "VA",
       "VT",
       "WA",
-      "WV",
       "WI",
+      "WV",
       "WY"
     ]
   end
