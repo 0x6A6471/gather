@@ -8,7 +8,11 @@ defmodule GatherWeb.GuestsLive do
     ~H"""
     <div class="max-w-screen-lg mx-auto mt-24">
       <div class="flex flex-col sm:flex-row items-center justify-between">
-        <h1 class="sm:text-left mb-8 sm:mb-0 font-bold text-3xl text-gray-50">Guests</h1>
+        <div>
+          <h1 class="sm:text-left mb-8 sm:mb-0 font-bold text-3xl text-gray-50">Guests</h1>
+          <p><%= @guest_count %> guests</p>
+        </div>
+
         <div class="flex items-center space-x-2">
           <.simple_form
             class="hidden sm:block"
@@ -176,6 +180,7 @@ defmodule GatherWeb.GuestsLive do
     socket =
       assign(socket,
         guests: Guests.list_guests(user_id),
+        guest_count: Guests.get_guest_amount(user_id),
         search: "",
         form: form
       )

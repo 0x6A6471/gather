@@ -14,7 +14,7 @@ defmodule GatherWeb.Endpoint do
   socket "/live", Phoenix.LiveView.Socket,
     websocket: [
       connect_info: [session: @session_options],
-      check_origin: ["https://gather.bar"]
+      check_origin: ["https://gather.bar", "http://localhost:4000"]
     ]
 
   # Serve at "/" the static files from "priv/static" directory.
