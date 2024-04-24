@@ -106,7 +106,25 @@ defmodule Gather.Guests do
   end
 
   @doc """
-  Returns a lsit of guests that match the search term.
+  Returns the sum of guest_amount associated to a user.
+
+  ## Examples
+
+      iex> search_by_name(user_id)
+      10
+  """
+  def get_guest_amount(user_id) do
+    # select sum(guest_amount) from guests where user_id = 1
+    query =
+      from g in Guest,
+        where: g.user_id == ^user_id,
+        select: sum(g.guest_amount)
+
+    Repo.one(query)
+  end
+
+  @doc """
+  Returns a list of guests that match the search term.
 
   ## Examples
 
