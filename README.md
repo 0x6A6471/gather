@@ -28,7 +28,7 @@ Migrate from [ocaml](https://github.com/jakequinter/gather/tree/ocaml)
 - [ ] guest routes
   - [x] GET (`/guests`)
   - [x] POST (`/guests`) -> `create_guest`
-  - [ ] PUT (`/guests`) -> `update_guest`
+  - [x] PUT (`/guests`) -> `update_guest`
   - [x] DELETE (`/guests`) -> `delete_guest`
 - [ ] search
 - [x] replace defaulted heroicons w/ sprite.svg
@@ -49,7 +49,7 @@ Migrate from [ocaml](https://github.com/jakequinter/gather/tree/ocaml)
 ### CI/CD
 
 - [x] deploy
-- [ ] setup github actions
+- [x] setup github actions
 
 ### Thoughts
 
